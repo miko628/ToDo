@@ -5,8 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Style="{StaticResource windowBackground}"
+        Title="To Do Application" Height="450" Width="800">
+    <Window.Resources>
+       
+    </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+
+        </Grid.ColumnDefinitions>
+
+
+        <!-- Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="3" Background="#2f5cb6"/ -->
+        <Border Grid.Column ="0" Grid.RowSpan="8"  Background="#1f3d7a"/>
+        <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#152951"/>
+
+
+        <StackPanel Grid.Row="1" Grid.RowSpan="8" Background="#1f3d7a">
+            <RadioButton GroupName="MenuOptionsGroup">Zadania</RadioButton>
+            <RadioButton GroupName="MenuOptionsGroup">Kalendarz</RadioButton>
+            <RadioButton GroupName="MenuOptionsGroup">Historia</RadioButton>
+            <RadioButton GroupName="MenuOptionsGroup"></RadioButton>
+            <RadioButton GroupName="MenuOptionsGroup"></RadioButton>
+
+        </StackPanel>
+       
+
 
     </Grid>
 </Window>
