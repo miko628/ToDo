@@ -8,9 +8,9 @@ using Microsoft.Win32;
 
 namespace ToDoApp
 {
-    class SoundNotification
+    public class SoundNotification
     {
-        public void PlayNotificationSound()
+        public static void PlayNotificationSound()
         {
             bool found = false;
             try

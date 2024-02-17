@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Style="{StaticResource windowBackground}"
         Title="To Do Application" Height="450" Width="800">
-    <Window.Resources>
+    <Window.DataContext>
         <!-- DataTemplate DataType="{x:Type }"/
 -->
-
-    </Window.Resources>
+        <local:MainViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -24,7 +24,7 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="2*"/>
 
@@ -33,10 +33,9 @@
 
         <!-- Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="3" Background="#2f5cb6"/ -->
         <Border Grid.Column ="0" Grid.RowSpan="8"  Background="#1f3d7a"/>
-        <Border Grid.Row="0" Grid.ColumnSpan="4" Background="#152951"/>
 
-
-        <StackPanel Grid.Row="1" Grid.RowSpan="8" Background="#1f3d7a">
+        <Expander Grid.Row="1" Grid.RowSpan="8" ExpandDirection="Right" HorizontalAlignment="Right">
+        <StackPanel  Background="#1f3d7a">
             <RadioButton GroupName="MenuOptionsGroup">Zadania</RadioButton>
             <RadioButton GroupName="MenuOptionsGroup">Kalendarz</RadioButton>
             <RadioButton GroupName="MenuOptionsGroup">Historia</RadioButton>
@@ -44,12 +43,30 @@
             <RadioButton GroupName="MenuOptionsGroup"></RadioButton>
             <Button Content="Play sound" Command="{Binding PlaySound}"/>
         </StackPanel>
-        <DockPanel x:Name="TaskPanel" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" LastChildFill="True" HorizontalAlignment="Stretch">
-            <CheckBox DockPanel.Dock="Left" Width="Auto"></CheckBox >
-            <Button DockPanel.Dock="Right" Width="Auto" Content="..."/>
-            <Label DockPanel.Dock="Left" HorizontalAlignment="Center" Width="Auto" ToolTip="Description">zadanie 1</Label >
+        </Expander>
 
-        </DockPanel>
+        <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="8" Background="#152951">
+
+            <ListView HorizontalAlignment="Stretch" ItemsSource="{Binding CurrentTasks}" SelectedItem="{Binding SelectedTask}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Vertical" />
+
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.Resources>
+                    <DataTemplate x:Key="TasksTemplate">
+                        <DockPanel Width="Auto"  LastChildFill="True" HorizontalAlignment="Stretch">
+                            <CheckBox DockPanel.Dock="Left" Width="Auto"></CheckBox >
+                            <Button DockPanel.Dock="Right"  Width="Auto" Content="..."/>
+                            <Label DockPanel.Dock="Left"  HorizontalAlignment="Center" Width="Auto" ToolTip="{Binding Description}" Content="{Binding Name}"/>
+
+                        </DockPanel>
+                    </DataTemplate>
+                </ListView.Resources>
+
+            </ListView>
+        </Border>
         <Button Grid.Row="8" Grid.Column="2" Command="{Binding AddTask}" Content="+" FontSize="25"/>
         <Button Grid.Row="8" Grid.Column="1" Command="{Binding DeleteTask}" Content="Delete" FontSize="25"/>
 
