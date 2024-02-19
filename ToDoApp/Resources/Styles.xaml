@@ -4,5 +4,4 @@
         <Setter Property="Background" Value="#2f5cb6"/>
 
     </Style>
-    
 </ResourceDictionary>

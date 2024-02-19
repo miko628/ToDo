@@ -10,6 +10,7 @@ namespace ToDoApp
 {
     internal class MainViewModel
     {
+        public Task SelectedTask { get; set; }
         public RelayCommand PlaySound { get; set; }
         public RelayCommand AddTask { get; set; }
         public RelayCommand DeleteTask { get; set; }
@@ -37,7 +38,7 @@ namespace ToDoApp
         }
         private void ExecuteDeleteTask(object parameter)
         {
-            SoundNotification.PlayNotificationSound();
+            CurrentTasks.Remove(SelectedTask);
         }
         private void ExecutePlaySound(object parameter)
         {

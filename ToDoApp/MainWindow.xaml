@@ -8,34 +8,32 @@
         Style="{StaticResource windowBackground}"
         Title="To Do Application" Height="450" Width="800">
     <Window.DataContext>
-        <!-- DataTemplate DataType="{x:Type }"/
--->
         <local:MainViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
 
 
         <!-- Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="3" Background="#2f5cb6"/ -->
-        <Border Grid.Column ="0" Grid.RowSpan="8"  Background="#1f3d7a"/>
+        <Border Grid.Column ="0" Grid.RowSpan="8"  Background="gray"/>
 
-        <Expander Grid.Row="1" Grid.RowSpan="8" ExpandDirection="Right" HorizontalAlignment="Right">
-        <StackPanel  Background="#1f3d7a">
+        <Expander Grid.Row="0" Grid.RowSpan="8" ExpandDirection="Left" HorizontalAlignment="Left" VerticalAlignment="Stretch" >
+        <StackPanel  Background="LightGreen">
             <RadioButton GroupName="MenuOptionsGroup">Zadania</RadioButton>
             <RadioButton GroupName="MenuOptionsGroup">Kalendarz</RadioButton>
             <RadioButton GroupName="MenuOptionsGroup">Historia</RadioButton>
@@ -45,28 +43,34 @@
         </StackPanel>
         </Expander>
 
-        <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="8" Background="#152951">
 
-            <ListView HorizontalAlignment="Stretch" ItemsSource="{Binding CurrentTasks}" SelectedItem="{Binding SelectedTask}">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Vertical" />
+        <ListView Width="Auto" HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="6" Background="LightPink" ItemsSource="{Binding CurrentTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
+    <ListView.ItemsPanel>
+        <ItemsPanelTemplate>
+            <WrapPanel Orientation="Vertical" />
+        </ItemsPanelTemplate>
+    </ListView.ItemsPanel>
 
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.Resources>
-                    <DataTemplate x:Key="TasksTemplate">
-                        <DockPanel Width="Auto"  LastChildFill="True" HorizontalAlignment="Stretch">
-                            <CheckBox DockPanel.Dock="Left" Width="Auto"></CheckBox >
-                            <Button DockPanel.Dock="Right"  Width="Auto" Content="..."/>
-                            <Label DockPanel.Dock="Left"  HorizontalAlignment="Center" Width="Auto" ToolTip="{Binding Description}" Content="{Binding Name}"/>
+    <ListView.ItemTemplate>
+        <DataTemplate>
+            <Border Background="AliceBlue" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Width="Auto">
+                <DockPanel LastChildFill="False" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                    <CheckBox DockPanel.Dock="Left" />
+                    <Button DockPanel.Dock="Right" Content="..." />
+                    <Label ToolTip="{Binding Description}" Content="{Binding Name}" />
+                </DockPanel>
+            </Border>
+        </DataTemplate>
+    </ListView.ItemTemplate>
 
-                        </DockPanel>
-                    </DataTemplate>
-                </ListView.Resources>
+    <ListView.ItemContainerStyle>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </ListView.ItemContainerStyle>
+</ListView>
 
-            </ListView>
-        </Border>
+
         <Button Grid.Row="8" Grid.Column="2" Command="{Binding AddTask}" Content="+" FontSize="25"/>
         <Button Grid.Row="8" Grid.Column="1" Command="{Binding DeleteTask}" Content="Delete" FontSize="25"/>
 
