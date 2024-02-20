@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +36,21 @@ namespace ToDoApp
         }
         private void ExecuteAddTask(object parameter)
         {
-            CurrentTasks.Add(new Task("zadanie","opis fajny"));
+            var dbCon = DbConnection.Instance();
+            if(dbCon.IsConnect())
+            {
+                string query = "select * from Task";
+                var cmd = new MySqlCommand(query, dbCon.Connection);
+                var reader = cmd.ExecuteReader();
+                while (reader.Read()) 
+                {
+                    //reader.
+                    //CurrentTasks.Add(new Task("reader.GetString(0)", "reader.GetString(1)"));
+                    Trace.WriteLine(reader.GetString(0) + reader.GetString(1));
+                    Trace.WriteLine(reader.GetString(2)+reader.GetString(3));
+                }
+                dbCon.Close();
+            }
         }
         private void ExecuteDeleteTask(object parameter)
         {

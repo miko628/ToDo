@@ -1,0 +1,8 @@
+create table Task
+(
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name varchar(30) NOT NULL,
+    description text NULL,
+    add_date date NULL,
+    do_date date NULL
+);
