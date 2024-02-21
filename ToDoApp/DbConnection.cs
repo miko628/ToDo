@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Common;
 using System.Windows;
+using MySqlX.XDevAPI;
+using System.Diagnostics;
 
 namespace ToDoApp
 {
@@ -16,7 +18,7 @@ namespace ToDoApp
         private string username;
         private string password;
         private string port;
-        public MySqlConnection Connection { get; private set; }
+        public MySqlConnection Connection { get; set; }
 
         private static DbConnection _instance = null;
 
@@ -30,7 +32,8 @@ namespace ToDoApp
         {
             var builder = new MySqlConnectionStringBuilder
             {
-                Server = "127.0.0.1:81",
+                Server = "127.0.0.1",
+                Port = 82,
                 UserID = "root",
                 Password = "notSecureChangeMe",
                 Database = "ToDoApp",
@@ -41,28 +44,52 @@ namespace ToDoApp
 
             if (Connection == null)
             {
-                if (String.IsNullOrEmpty(databasename))
-                    return false;
-                string connstring = string.Format("Server={0}; database={1}; userid={2}; password={3}; port={4}; SslMode=None", server, databasename, username, password, port);
+                string connstring = string.Format("user='root',password='notSecureChangeMe',host='127.0.0.1', port='82',database='ToDoApp'");
                 Connection = new MySqlConnection(builder.ConnectionString);
+                //Connection = new MySqlConnection(connstring);
                 Connection.Open();
+                
             }
+
+
+            Trace.WriteLine("koniec ? sie");
 
             return true;
         }
 
-        public void Connect()
+        public List<Task> GetAllTasks()
         {
-            server = "localhost:81";
-            databasename = "localhost:81";
-            username = "localhost:81";
-            password= "localhost:81";
-            string connect = string.Format("Server={0}; database={1}; UID={2}; password={3}", server, databasename, username, password);
-            MySqlConnection connection = new MySqlConnection(connect);
-            MySqlCommand command = new MySqlCommand("select * from Tasks",connection);
-            connection.Open();
-            connection.Close();
+            List<Task> new_tasks = new List<Task>();
+
+            if (this.IsConnect())
+            { 
+                string query = "select * from Task";
+                var cmd = new MySqlCommand(query, Connection);
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                    new_tasks.Add(new Task(reader.GetString("name"), Convert.ToDateTime(reader.GetString("do_date")), Convert.ToDateTime(reader.GetString("add_date")), reader.GetString("description"), Convert.ToBoolean(reader.GetString("done"))));
+                    }
+
+                    reader.Close();
+                }
+                Connection.Close();
+            }
+            return new_tasks;
         }
+        /*        public void Connect()
+                {
+                    server = "localhost:81";
+                    databasename = "localhost:81";
+                    username = "localhost:81";
+                    password= "localhost:81";
+                    string connect = string.Format("Server={0}; database={1}; UID={2}; password={3}", server, databasename, username, password);
+                    MySqlConnection connection = new MySqlConnection(connect);
+                    MySqlCommand command = new MySqlCommand("select * from `Tasks`",connection);
+                    connection.Open();
+                    connection.Close();
+                }*/
         public void Close()
         {
             Connection.Close();
