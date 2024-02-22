@@ -49,6 +49,9 @@ namespace ToDoApp
                 //Connection = new MySqlConnection(connstring);
                 Connection.Open();
                 
+            }else if (Connection.State == System.Data.ConnectionState.Closed)
+            {
+                Connection.Open();
             }
 
 
@@ -62,16 +65,27 @@ namespace ToDoApp
             List<Task> new_tasks = new List<Task>();
 
             if (this.IsConnect())
-            { 
+            {
+                Trace.WriteLine(this.IsConnect());
                 string query = "select * from Task";
                 var cmd = new MySqlCommand(query, Connection);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
+                    try { 
                     while (reader.Read())
                     {
-                    new_tasks.Add(new Task(reader.GetString("name"), Convert.ToDateTime(reader.GetString("do_date")), Convert.ToDateTime(reader.GetString("add_date")), reader.GetString("description"), Convert.ToBoolean(reader.GetString("done"))));
+                            Trace.WriteLine(reader.GetString("name"));
+                            Trace.WriteLine(reader.GetString("description"));
+                           // Trace.WriteLine(Convert.ToDateTime(reader.GetString("do_date")));
+                          //  Trace.WriteLine(Convert.ToDateTime(reader.GetString("add_date")));
+                           // Trace.WriteLine(Convert.ToBoolean(reader.GetString("done")));
+                            
+                    var task = new Task(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString());
+                        new_tasks.Add(task);
                     }
-
+                    }
+                    catch (Exception e)
+                    { Trace.WriteLine(e.ToString()); }
                     reader.Close();
                 }
                 Connection.Close();

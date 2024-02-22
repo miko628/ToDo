@@ -19,21 +19,41 @@ namespace ToDoApp
         public DateTime TaskAddDate { get => taskAddDate; set => taskAddDate = value; }
         public DateTime TaskToDoDate { get => taskToDoDate; set => taskToDoDate = value; }
         public bool Done { get => done; set => done = value; }
-        public Task(string name, DateTime taskToDoDate, DateTime taskAddDate, string description = "",bool done = false)
+        public Task(string name, string? taskToDoDate, string? taskAddDate, string? description,string? done)
         {
             this.Name = name;
-            this.Description = description;
-            this.TaskAddDate = taskAddDate;
-            this.TaskToDoDate = taskToDoDate;
-            this.Done = done;
+            if(description=="" )
+            {
+                this.Description = "";
+            }
+            else this.Description = description;
+
+            if (taskToDoDate =="")
+            {
+                this.TaskToDoDate = DateTime.Now;
+
+            }
+            else this.TaskToDoDate = Convert.ToDateTime(taskToDoDate); 
+
+            if(taskAddDate == "")
+            {
+                this.taskAddDate = DateTime.Now;
+            }
+            else this.TaskAddDate = Convert.ToDateTime(taskAddDate);
+
+            if (done == "")
+            {
+                this.Done = false;
+            }
+            else this.Done = Convert.ToBoolean(done);
         }
-        public Task(string name,string description="",bool done = false)
+       /* public Task(string name,string description="",bool done = false)
         {
             this.Name = name;
             this.Description = description;
             this.TaskAddDate = DateTime.Now;
             this.TaskToDoDate = DateTime.Now;
             this.Done = done;
-        }
+        }*/
     }
 }

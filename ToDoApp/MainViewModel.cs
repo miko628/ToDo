@@ -42,7 +42,7 @@ namespace ToDoApp
             new_task = dbCon.GetAllTasks();
             foreach (var task in new_task) 
             {
-                CurrentTasks.Add(new Task(task.Name, task.Description));
+                CurrentTasks.Add(task);
             }
             
 
