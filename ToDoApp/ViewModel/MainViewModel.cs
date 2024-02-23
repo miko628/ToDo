@@ -9,21 +9,39 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ToDoApp
+namespace ToDoApp.ViewModel
 {
-    internal class MainViewModel
+    internal class MainViewModel: ViewModelBase
     {
+        private object _currentView;
+
         public Task SelectedTask { get; set; }
         public RelayCommand PlaySound { get; set; }
         public RelayCommand AddTask { get; set; }
         public RelayCommand DeleteTask { get; set; }
         public ObservableCollection<Task> CurrentTasks { get; set; }
-        public MainViewModel() 
+        public string CurrentTime { get; set; }
+
+        public RelayCommand HistoryCommand { get; set; }
+        public RelayCommand TasksCommand { get; set; }
+        public RelayCommand CalendarCommand { get; set; }
+
+
+        public object CurrentView 
+        {
+            get {  return _currentView; }
+            set { _currentView = value; OnPropertyChanged(); }
+        }
+
+
+        public MainViewModel()
         {
             CurrentTasks = new ObservableCollection<Task>();
-            PlaySound=new RelayCommand(ExecutePlaySound,CanExecuteMyCommand);
+            PlaySound = new RelayCommand(ExecutePlaySound, CanExecuteMyCommand);
             AddTask = new RelayCommand(ExecuteAddTask, CanExecuteMyCommand);
-            DeleteTask = new RelayCommand(ExecuteDeleteTask,CanExecuteMyCommand);
+            DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
+
+            CurrentView = new TasksViewModel();
         }
         private bool ExecuteCommand(object parameter)
         {
@@ -35,16 +53,21 @@ namespace ToDoApp
             //_canExecute = !_canExecute;
             // return _canExecute;
         }
-        private void ExecuteAddTask(object parameter)
+        private void showDBTasks()
         {
             var dbCon = DbConnection.Instance();
             List<Task> new_task = new List<Task>();
             new_task = dbCon.GetAllTasks();
-            foreach (var task in new_task) 
+            foreach (var task in new_task)
             {
                 CurrentTasks.Add(task);
             }
-            
+        }
+        private void ExecuteAddTask(object parameter)
+        {
+
+            //otworz okienko dodawania Taska
+            CurrentTasks.Add(new Task("nowe", "", "", "przykladowy opis", ""));
 
         }
         private void ExecuteDeleteTask(object parameter)
@@ -59,5 +82,9 @@ namespace ToDoApp
         {
             return true;
         }
+       /* public async Task updateTimer()
+        {
+
+        }*/
     }
 }

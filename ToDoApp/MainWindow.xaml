@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoApp"
+        xmlns:viewModel="clr-namespace:ToDoApp.ViewModel"
         mc:Ignorable="d"
         Style="{StaticResource windowBackground}"
         Title="To Do Application" Height="450" Width="800">
     <Window.DataContext>
-        <local:MainViewModel/>
+        <viewModel:MainViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
@@ -30,7 +31,10 @@
 
 
         <!-- Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="3" Background="#2f5cb6"/ -->
-        <Border Grid.Column ="0" Grid.RowSpan="8"  Background="gray"/>
+        <Border Grid.Column ="0" Grid.RowSpan="8"  Background="gray">
+            <TextBlock Text="{Binding CurrentTime}"/>
+        </Border>
+
 
         <Expander Grid.Row="0" Grid.RowSpan="8" ExpandDirection="Left" HorizontalAlignment="Left" VerticalAlignment="Stretch" >
         <StackPanel  Background="LightGreen">
@@ -43,33 +47,12 @@
         </StackPanel>
         </Expander>
 
-
-        <ListView Width="Auto" HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="6" Background="LightPink" ItemsSource="{Binding CurrentTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
-    <ListView.ItemsPanel>
-        <ItemsPanelTemplate>
-            <WrapPanel Orientation="Vertical" />
-        </ItemsPanelTemplate>
-    </ListView.ItemsPanel>
-
-    <ListView.ItemTemplate>
-        <DataTemplate>
-            <Border Background="AliceBlue" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Width="Auto">
-                <DockPanel LastChildFill="False" ScrollViewer.VerticalScrollBarVisibility="Auto" >
-                    <CheckBox DockPanel.Dock="Left" />
-                    <Button DockPanel.Dock="Right" Content="..." />
-                    <Label ToolTip="{Binding Description}" Content="{Binding Name}" />
-                </DockPanel>
-            </Border>
-        </DataTemplate>
-    </ListView.ItemTemplate>
-
-    <ListView.ItemContainerStyle>
-        <Style TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        </Style>
-    </ListView.ItemContainerStyle>
-</ListView>
-
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="6" >
+            <ContentControl x:Name="Views"
+                            Content="{Binding CurrentView}">
+            </ContentControl>
+        </Grid>
+           
 
         <Button Grid.Row="8" Grid.Column="2" Command="{Binding AddTask}" Content="+" FontSize="25"/>
         <Button Grid.Row="8" Grid.Column="1" Command="{Binding DeleteTask}" Content="Delete" FontSize="25"/>
