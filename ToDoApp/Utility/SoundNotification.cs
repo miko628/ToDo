@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Media;
 using Microsoft.Win32;
 
-namespace ToDoApp
+namespace ToDoApp.Utility
 {
     public class SoundNotification
     {

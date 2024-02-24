@@ -2,12 +2,17 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:view="clr-namespace:ToDoApp.View"
                     xmlns:viewModel="clr-namespace:ToDoApp.ViewModel">
+    
     <DataTemplate DataType="{x:Type viewModel:HistoryViewModel}">
         <view:HistoryView/>
-
     </DataTemplate>
+    
     <DataTemplate DataType="{x:Type viewModel:TaskViewModel}">
         <view:TaskView/>
-        </DataTemplate>
-    
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModel:CalendarViewModel}">
+        <view:CalendarView/>
+    </DataTemplate>
+
 </ResourceDictionary>

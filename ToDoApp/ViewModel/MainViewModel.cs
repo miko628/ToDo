@@ -8,6 +8,8 @@ using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ToDoApp.ViewModel;
+using ToDoApp.Utility;
 
 namespace ToDoApp.ViewModel
 {
@@ -15,17 +17,17 @@ namespace ToDoApp.ViewModel
     {
         private object _currentView;
 
-        public Task SelectedTask { get; set; }
         public RelayCommand PlaySound { get; set; }
-        public RelayCommand AddTask { get; set; }
-        public RelayCommand DeleteTask { get; set; }
-        public ObservableCollection<Task> CurrentTasks { get; set; }
+      
         public string CurrentTime { get; set; }
 
         public RelayCommand HistoryCommand { get; set; }
         public RelayCommand TasksCommand { get; set; }
         public RelayCommand CalendarCommand { get; set; }
 
+        private void GoToHistory(object obj) => CurrentView = new HistoryViewModel();
+        private void GoToTasks(object obj) => CurrentView = new TaskViewModel();
+        private void GoToCalendar(object obj) => CurrentView = new CalendarViewModel();
 
         public object CurrentView 
         {
@@ -36,12 +38,13 @@ namespace ToDoApp.ViewModel
 
         public MainViewModel()
         {
-            CurrentTasks = new ObservableCollection<Task>();
-            PlaySound = new RelayCommand(ExecutePlaySound, CanExecuteMyCommand);
-            AddTask = new RelayCommand(ExecuteAddTask, CanExecuteMyCommand);
-            DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
+            CurrentView = new TaskViewModel();
 
-            CurrentView = new TasksViewModel();
+            PlaySound = new RelayCommand(ExecutePlaySound, CanExecuteMyCommand);
+            HistoryCommand = new RelayCommand(GoToHistory, CanExecuteMyCommand);
+            TasksCommand = new RelayCommand(GoToTasks, CanExecuteMyCommand);
+            CalendarCommand = new RelayCommand(GoToCalendar, CanExecuteMyCommand);
+
         }
         private bool ExecuteCommand(object parameter)
         {
@@ -60,20 +63,10 @@ namespace ToDoApp.ViewModel
             new_task = dbCon.GetAllTasks();
             foreach (var task in new_task)
             {
-                CurrentTasks.Add(task);
+               // CurrentTasks.Add(task);
             }
         }
-        private void ExecuteAddTask(object parameter)
-        {
-
-            //otworz okienko dodawania Taska
-            CurrentTasks.Add(new Task("nowe", "", "", "przykladowy opis", ""));
-
-        }
-        private void ExecuteDeleteTask(object parameter)
-        {
-            CurrentTasks.Remove(SelectedTask);
-        }
+       
         private void ExecutePlaySound(object parameter)
         {
             SoundNotification.PlayNotificationSound();

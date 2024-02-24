@@ -38,24 +38,25 @@
 
         <Expander Grid.Row="0" Grid.RowSpan="8" ExpandDirection="Left" HorizontalAlignment="Left" VerticalAlignment="Stretch" >
         <StackPanel  Background="LightGreen">
-            <RadioButton GroupName="MenuOptionsGroup">Zadania</RadioButton>
-            <RadioButton GroupName="MenuOptionsGroup">Kalendarz</RadioButton>
-            <RadioButton GroupName="MenuOptionsGroup">Historia</RadioButton>
-            <RadioButton GroupName="MenuOptionsGroup"></RadioButton>
-            <RadioButton GroupName="MenuOptionsGroup"></RadioButton>
-            <Button Content="Play sound" Command="{Binding PlaySound}"/>
+                <Button Content="Zadania" Command="{Binding TasksCommand}"/>
+                <Button Content="Historia" Command="{Binding HistoryCommand}"/>
+
+                <Button Content="Kalendarz" Command="{Binding CalendarCommand}"/>
+
+                <Button Content="do wypelnienia" Command="{Binding TasksCommand}"/>
+                <Button Content="do wypelnienia" Command="{Binding TasksCommand}"/>
+           
+                 <Button Content="Play sound" Command="{Binding PlaySound}"/>
         </StackPanel>
         </Expander>
 
-        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="6" >
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="8" >
             <ContentControl x:Name="Views"
                             Content="{Binding CurrentView}">
             </ContentControl>
         </Grid>
            
 
-        <Button Grid.Row="8" Grid.Column="2" Command="{Binding AddTask}" Content="+" FontSize="25"/>
-        <Button Grid.Row="8" Grid.Column="1" Command="{Binding DeleteTask}" Content="Delete" FontSize="25"/>
 
 
     </Grid>
