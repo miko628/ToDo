@@ -60,7 +60,7 @@ namespace ToDoApp.ViewModel
         {
             var dbCon = DbConnection.Instance();
             List<Task> new_task = new List<Task>();
-            new_task = dbCon.GetAllTasks();
+            //new_task = dbCon.GetAllTasks();
             foreach (var task in new_task)
             {
                // CurrentTasks.Add(task);

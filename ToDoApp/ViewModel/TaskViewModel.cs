@@ -10,24 +10,39 @@ namespace ToDoApp.ViewModel
 {
     class TaskViewModel: ViewModelBase
     {
-        public Task SelectedTask { get; set; }
+        public ToDoTask SelectedTask { get; set; }
         public RelayCommand AddTask { get; set; }
         public RelayCommand DeleteTask { get; set; }
-        public ObservableCollection<Task> CurrentTasks { get; set; }
+        public ObservableCollection<ToDoTask> CurrentTasks { get; set; }
 
         public TaskViewModel()
         {
-            CurrentTasks = new ObservableCollection<Task>();
+            CurrentTasks = new ObservableCollection<ToDoTask>();
 
             AddTask = new RelayCommand(ExecuteAddTask, CanExecuteMyCommand);
             DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
+            LoadTasks(new object());
+        }
+
+        private void LoadTasks(object parameter)
+        {
+            CurrentTasks.Clear();
+            List<ToDoTask> tasks = DbCrud.getCurrentTasks();
+            
+            foreach (ToDoTask t in tasks)
+            {
+                CurrentTasks.Add(t);
+            }
+        
         }
 
         private void ExecuteAddTask(object parameter)
         {
 
             //otworz okienko dodawania Taska
-            CurrentTasks.Add(new Task("nowe", "", "", "przykladowy opis", ""));
+            var task = new ToDoTask("nowe", "", "", "przykladowy opis", "");
+            DbCrud.InsertTask(task);
+            LoadTasks(new object());
 
         }
         private void ExecuteDeleteTask(object parameter)

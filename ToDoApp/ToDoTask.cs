@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ToDoApp
 {
-    class Task
+    class ToDoTask
     {
         private string name;
         private string description;
@@ -19,7 +19,7 @@ namespace ToDoApp
         public DateTime TaskAddDate { get => taskAddDate; set => taskAddDate = value; }
         public DateTime TaskToDoDate { get => taskToDoDate; set => taskToDoDate = value; }
         public bool Done { get => done; set => done = value; }
-        public Task(string name, string? taskToDoDate, string? taskAddDate, string? description,string? done)
+        public ToDoTask(string name, string? taskToDoDate, string? taskAddDate, string? description,string? done)
         {
             this.Name = name;
             if(description=="" )

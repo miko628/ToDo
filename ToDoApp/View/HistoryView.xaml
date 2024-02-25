@@ -7,7 +7,39 @@
              xmlns:viewModel="clr-namespace:ToDoApp.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="LightPink">
-        <Label Content="Tu kiedys bendzie historia ok ok ok ?"/>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListView Grid.ColumnSpan="2" Background="LightPink" Width="Auto" HorizontalAlignment="Stretch"  ItemsSource="{Binding HistoryTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="AliceBlue">
+                        <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                            <CheckBox HorizontalAlignment="Left" VerticalContentAlignment="Stretch"/>
+                            <Label ToolTip="{Binding Description}" Content="{Binding Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+                            <Button HorizontalAlignment="Right" Content="..." />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!-- Button Grid.Row="2" Grid.Column="1" Command="{Binding AddTask}" Content="+" FontSize="25"/ -->
+        <!-- Button Grid.Row="2" Grid.Column="0" Command="{Binding DeleteTask}" Content="Delete" FontSize="25"/ -->
     </Grid>
 </UserControl>

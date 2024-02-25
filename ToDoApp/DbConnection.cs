@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Common;
 using System.Windows;
-using MySqlX.XDevAPI;
 using System.Diagnostics;
 
 namespace ToDoApp
@@ -60,9 +59,9 @@ namespace ToDoApp
             return true;
         }
 
-        public List<Task> GetAllTasks()
+        public List<ToDoTask> GetAllTasks()
         {
-            List<Task> new_tasks = new List<Task>();
+            List<ToDoTask> new_tasks = new List<ToDoTask>();
 
             if (this.IsConnect())
             {
@@ -80,7 +79,7 @@ namespace ToDoApp
                           //  Trace.WriteLine(Convert.ToDateTime(reader.GetString("add_date")));
                            // Trace.WriteLine(Convert.ToBoolean(reader.GetString("done")));
                             
-                    var task = new Task(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString());
+                    var task = new ToDoTask(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString());
                         new_tasks.Add(task);
                     }
                     }
@@ -92,18 +91,7 @@ namespace ToDoApp
             }
             return new_tasks;
         }
-        /*        public void Connect()
-                {
-                    server = "localhost:81";
-                    databasename = "localhost:81";
-                    username = "localhost:81";
-                    password= "localhost:81";
-                    string connect = string.Format("Server={0}; database={1}; UID={2}; password={3}", server, databasename, username, password);
-                    MySqlConnection connection = new MySqlConnection(connect);
-                    MySqlCommand command = new MySqlCommand("select * from `Tasks`",connection);
-                    connection.Open();
-                    connection.Close();
-                }*/
+  
         public void Close()
         {
             Connection.Close();
