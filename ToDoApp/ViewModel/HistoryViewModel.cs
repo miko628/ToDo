@@ -10,6 +10,7 @@ namespace ToDoApp.ViewModel
     internal class HistoryViewModel: ViewModelBase
     {
         public ObservableCollection<ToDoTask> HistoryTasks { get; set; }
+        public ToDoTask SelectedTask { get; set; }
 
         private void LoadTasks(object parameter)
         {

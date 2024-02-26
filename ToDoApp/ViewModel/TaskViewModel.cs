@@ -14,16 +14,18 @@ namespace ToDoApp.ViewModel
         public RelayCommand AddTask { get; set; }
         public RelayCommand DeleteTask { get; set; }
         public ObservableCollection<ToDoTask> CurrentTasks { get; set; }
+        public ObservableCollection<bool> Checked { get; set; }
 
         public TaskViewModel()
         {
+            
             CurrentTasks = new ObservableCollection<ToDoTask>();
-
+            Checked = new ObservableCollection<bool>();
             AddTask = new RelayCommand(ExecuteAddTask, CanExecuteMyCommand);
             DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
             LoadTasks(new object());
         }
-
+        
         private void LoadTasks(object parameter)
         {
             CurrentTasks.Clear();
@@ -40,14 +42,18 @@ namespace ToDoApp.ViewModel
         {
 
             //otworz okienko dodawania Taska
-            var task = new ToDoTask("nowe", "", "", "przykladowy opis", "");
+            var task = new ToDoTask("nowe", "", "", "przykladowy opis", "",null);
             DbCrud.InsertTask(task);
             LoadTasks(new object());
 
         }
         private void ExecuteDeleteTask(object parameter)
         {
-            CurrentTasks.Remove(SelectedTask);
+            if (SelectedTask is not null)
+            {
+                DbCrud.DeleteTask(SelectedTask);
+                LoadTasks(new object());
+            }
         }
 
         private bool CanExecuteMyCommand(object parameter)

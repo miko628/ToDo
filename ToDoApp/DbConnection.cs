@@ -59,38 +59,7 @@ namespace ToDoApp
             return true;
         }
 
-        public List<ToDoTask> GetAllTasks()
-        {
-            List<ToDoTask> new_tasks = new List<ToDoTask>();
-
-            if (this.IsConnect())
-            {
-                Trace.WriteLine(this.IsConnect());
-                string query = "select * from Task";
-                var cmd = new MySqlCommand(query, Connection);
-                using (MySqlDataReader reader = cmd.ExecuteReader())
-                {
-                    try { 
-                    while (reader.Read())
-                    {
-                            Trace.WriteLine(reader.GetString("name"));
-                            Trace.WriteLine(reader.GetString("description"));
-                           // Trace.WriteLine(Convert.ToDateTime(reader.GetString("do_date")));
-                          //  Trace.WriteLine(Convert.ToDateTime(reader.GetString("add_date")));
-                           // Trace.WriteLine(Convert.ToBoolean(reader.GetString("done")));
-                            
-                    var task = new ToDoTask(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString());
-                        new_tasks.Add(task);
-                    }
-                    }
-                    catch (Exception e)
-                    { Trace.WriteLine(e.ToString()); }
-                    reader.Close();
-                }
-                Connection.Close();
-            }
-            return new_tasks;
-        }
+       
   
         public void Close()
         {

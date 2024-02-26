@@ -3,23 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace ToDoApp.Utility
 {
-    internal class Timer
+    public class Timer
     {
-        
-        private void start()
+        private DispatcherTimer timer;
+        public event EventHandler Tick;
+
+        public Timer()
         {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 5, 0);
-            dispatcherTimer.Start();
+            timer= new DispatcherTimer();
+            timer.Interval = new TimeSpan(0,0,1);
+            timer.Tick += Timer_Tick;
+
+
         }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        public void Start()
         {
-            // code goes here
+            timer.Start();
+        }
+
+        public void Stop()
+        {
+            timer.Stop();
+        }
+
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Tick?.Invoke(this, EventArgs.Empty);
         }
     }
 }

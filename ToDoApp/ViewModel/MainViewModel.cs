@@ -16,10 +16,19 @@ namespace ToDoApp.ViewModel
     internal class MainViewModel: ViewModelBase
     {
         private object _currentView;
+        private string _currentTime;
 
         public RelayCommand PlaySound { get; set; }
       
-        public string CurrentTime { get; set; }
+        public string CurrentTime 
+        {
+            get { return _currentTime; }
+            set {
+                _currentTime = value;
+                OnPropertyChanged(nameof(CurrentTime));
+
+                    }
+        }
 
         public RelayCommand HistoryCommand { get; set; }
         public RelayCommand TasksCommand { get; set; }
@@ -44,8 +53,17 @@ namespace ToDoApp.ViewModel
             HistoryCommand = new RelayCommand(GoToHistory, CanExecuteMyCommand);
             TasksCommand = new RelayCommand(GoToTasks, CanExecuteMyCommand);
             CalendarCommand = new RelayCommand(GoToCalendar, CanExecuteMyCommand);
-
+            ToDoApp.Utility.Timer timer = new ToDoApp.Utility.Timer();
+            timer.Tick += Timer_Tick;
+            timer.Start();
         }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            CurrentTime = DateTime.Now.ToString(); // Aktualizujemy bieżący czas za każdym razem, gdy zdarzenie Tick zostanie wywołane
+        }
+
+
         private bool ExecuteCommand(object parameter)
         {
             if (Application.Current.MainWindow != null)

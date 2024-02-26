@@ -31,8 +31,8 @@
 
 
         <!-- Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="3" Background="#2f5cb6"/ -->
-        <Border Grid.Column ="0" Grid.RowSpan="8"  Background="gray">
-            <TextBlock Text="{Binding CurrentTime}"/>
+        <Border Grid.Column ="1" Grid.ColumnSpan="2" Grid.Row="0"  Background="gray">
+            <TextBlock Text= "{Binding CurrentTime}" />
         </Border>
 
 

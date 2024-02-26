@@ -30,7 +30,7 @@ namespace ToDoApp
                         while (reader.Read())
                         {
 
-                            var task = new ToDoTask(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString());
+                            var task = new ToDoTask(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString(), reader[0].ToString());
                             new_tasks.Add(task);
 
                         }
@@ -65,7 +65,7 @@ namespace ToDoApp
                         while (reader.Read())
                         {
 
-                            var task = new ToDoTask(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString());
+                            var task = new ToDoTask(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString(), reader[0].ToString());
                             new_tasks.Add(task);
 
                         }
@@ -102,7 +102,7 @@ namespace ToDoApp
                         while (reader.Read())
                         {
 
-                            var task = new ToDoTask(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString());
+                            var task = new ToDoTask(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString(), reader[0].ToString());
                             new_tasks.Add(task);
 
                         }
@@ -145,6 +145,23 @@ namespace ToDoApp
                 
             conn.Close();
         }
+
+        public static void DeleteTask(ToDoTask task) 
+        {
+            DbConnection conn = DbConnection.Instance();
+
+            if (conn.IsConnect())
+            {
+                var Command = conn.Connection.CreateCommand();
+                Command.CommandText = "delete from Task where id=@id";
+                Command.Parameters.AddWithValue("@id", task.Id);
+
+                Command.ExecuteNonQuery();
+            }
+
+            conn.Close();
+        }
+
 
     }
 }
