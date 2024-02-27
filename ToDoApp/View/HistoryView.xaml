@@ -31,7 +31,7 @@
                 <DataTemplate>
                     <Border Background="AliceBlue">
                         <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" >
-                            <CheckBox HorizontalAlignment="Left" VerticalContentAlignment="Stretch"/>
+                            <CheckBox HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Done, Mode=TwoWay}" Command="{Binding DataContext.Unchecked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/>
                             <Label ToolTip="{Binding Description}" Content="{Binding Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
                             <Button HorizontalAlignment="Right" Content="..." />
                         </Grid>

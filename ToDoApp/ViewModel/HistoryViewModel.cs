@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ToDoApp.Utility;
 
 namespace ToDoApp.ViewModel
 {
@@ -11,6 +12,22 @@ namespace ToDoApp.ViewModel
     {
         public ObservableCollection<ToDoTask> HistoryTasks { get; set; }
         public ToDoTask SelectedTask { get; set; }
+        public RelayCommand Unchecked { get; set; }
+
+
+        public HistoryViewModel()
+        {
+            HistoryTasks = new ObservableCollection<ToDoTask>();
+            LoadTasks(new object());
+            Unchecked = new RelayCommand(ExecuteUndoneTask, CanExecuteMyCommand);
+        }
+
+        private void ExecuteUndoneTask(object parameter)
+        {
+            //Trace.WriteLine((ToDoTask)parameter);
+            DbCrud.UndoneTask((ToDoTask)parameter);
+            LoadTasks(new object());
+        }
 
         private void LoadTasks(object parameter)
         {
@@ -23,11 +40,9 @@ namespace ToDoApp.ViewModel
             }
 
         }
-
-        public HistoryViewModel()
+        private bool CanExecuteMyCommand(object parameter)
         {
-            HistoryTasks = new ObservableCollection<ToDoTask>();
-            LoadTasks(new object());
+            return true;
         }
     }
 }

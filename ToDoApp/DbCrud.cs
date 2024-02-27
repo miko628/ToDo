@@ -145,6 +145,38 @@ namespace ToDoApp
                 
             conn.Close();
         }
+        public static void DoneTask(ToDoTask task) 
+        {
+            DbConnection conn = DbConnection.Instance();
+
+            if (conn.IsConnect())
+            {
+                var Command = conn.Connection.CreateCommand();
+                Command.CommandText = "update Task set done = 1 where id=@id";
+                Command.Parameters.AddWithValue("@id", task.Id);
+
+                Command.ExecuteNonQuery();
+            }
+
+            conn.Close();
+
+        }
+
+        public static void UndoneTask(ToDoTask task)
+        {
+            DbConnection conn = DbConnection.Instance();
+
+            if (conn.IsConnect())
+            {
+                var Command = conn.Connection.CreateCommand();
+                Command.CommandText = "update Task set done = 0 where id=@id";
+                Command.Parameters.AddWithValue("@id", task.Id);
+
+                Command.ExecuteNonQuery();
+            }
+
+            conn.Close();
+        }
 
         public static void DeleteTask(ToDoTask task) 
         {
