@@ -13,6 +13,7 @@ namespace ToDoApp.ViewModel
         public ObservableCollection<ToDoTask> HistoryTasks { get; set; }
         public ToDoTask SelectedTask { get; set; }
         public RelayCommand Unchecked { get; set; }
+        public RelayCommand DeleteTask { get; set; }
 
 
         public HistoryViewModel()
@@ -20,6 +21,8 @@ namespace ToDoApp.ViewModel
             HistoryTasks = new ObservableCollection<ToDoTask>();
             LoadTasks(new object());
             Unchecked = new RelayCommand(ExecuteUndoneTask, CanExecuteMyCommand);
+            DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
+
         }
 
         private void ExecuteUndoneTask(object parameter)
@@ -40,6 +43,15 @@ namespace ToDoApp.ViewModel
             }
 
         }
+        private void ExecuteDeleteTask(object parameter)
+        {
+            if (SelectedTask is not null)
+            {
+                DbCrud.DeleteTask(SelectedTask);
+                LoadTasks(new object());
+            }
+        }
+
         private bool CanExecuteMyCommand(object parameter)
         {
             return true;

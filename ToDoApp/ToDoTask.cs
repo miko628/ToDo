@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ToDoApp
 {
-    class ToDoTask
+    public class ToDoTask
     {
         private string? id;
         private string name;

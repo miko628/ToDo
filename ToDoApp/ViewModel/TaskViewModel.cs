@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using ToDoApp.Utility;
 
@@ -53,6 +54,9 @@ namespace ToDoApp.ViewModel
             //otworz okienko dodawania Taska
             var task = new ToDoTask("nowe", "", "", "przykladowy opis", "",null);
             DbCrud.InsertTask(task);
+
+
+            TaskEvents.StartTask(task);
             LoadTasks(new object());
 
         }

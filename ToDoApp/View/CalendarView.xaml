@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="YellowGreen">
-        <Label Content="Tu kiedys bendzie kalendarz ok ok ok ?"/>
-        <Calendar HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
+        <Calendar HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
     </Grid>
 </UserControl>
