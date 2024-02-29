@@ -52,9 +52,6 @@ namespace ToDoApp.ViewModel
             }
         }
 
-        private bool CanExecuteMyCommand(object parameter)
-        {
-            return true;
-        }
+    
     }
 }

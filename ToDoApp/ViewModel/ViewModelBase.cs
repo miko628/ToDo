@@ -15,5 +15,10 @@ namespace ToDoApp.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+
+        protected bool CanExecuteMyCommand(object parameter)
+        {
+            return true;
+        }
     }
 }

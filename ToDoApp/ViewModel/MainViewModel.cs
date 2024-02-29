@@ -89,10 +89,7 @@ namespace ToDoApp.ViewModel
         {
             SoundNotification.PlayNotificationSound();
         }
-        private bool CanExecuteMyCommand(object parameter)
-        {
-            return true;
-        }
+     
        /* public async Task updateTimer()
         {
 

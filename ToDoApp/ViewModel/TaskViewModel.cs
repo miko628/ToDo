@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Mysqlx.Connection;
+using Org.BouncyCastle.Tls;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -8,11 +10,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using ToDoApp.Utility;
+using ToDoApp.View;
 
 namespace ToDoApp.ViewModel
 {
     class TaskViewModel: ViewModelBase
     {
+        private TaskCreatorView taskCreator;
         public ToDoTask SelectedTask { get; set; }
         public RelayCommand AddTask { get; set; }
         public RelayCommand DeleteTask { get; set; }
@@ -52,13 +56,32 @@ namespace ToDoApp.ViewModel
         {
 
             //otworz okienko dodawania Taska
-            var task = new ToDoTask("nowe", "", "", "przykladowy opis", "",null);
+            /*var task = new ToDoTask("nowe", "", "", "przykladowy opis", "",null);
             DbCrud.InsertTask(task);
+            
+
+            TaskEvents.StartTask(task);*/
+
+            if (taskCreator is null || !taskCreator.IsVisible)
+            {
+                taskCreator = new TaskCreatorView();              
+                taskCreator.Closed += TaskCreator_Closed;
+                taskCreator.ShowDialog();
+
+            }
+            else taskCreator.Activate();
+            //TaskCreatorView taskCreator = new();
+            //LoadTasks(new object());
+
+        }
 
 
-            TaskEvents.StartTask(task);
+
+        private void TaskCreator_Closed(object sender, EventArgs e)
+        {
+            // Usuń referencję do zamkniętego okna
+            taskCreator = null;
             LoadTasks(new object());
-
         }
         private void ExecuteDeleteTask(object parameter)
         {
@@ -69,9 +92,6 @@ namespace ToDoApp.ViewModel
             }
         }
 
-        private bool CanExecuteMyCommand(object parameter)
-        {
-            return true;
-        }
+       
     }
 }
