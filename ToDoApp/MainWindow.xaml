@@ -43,8 +43,8 @@
 
                 <Button Content="Kalendarz" Command="{Binding CalendarCommand}"/>
 
-                <Button Content="do wypelnienia" Command="{Binding TasksCommand}"/>
-                <Button Content="do wypelnienia" Command="{Binding TasksCommand}"/>
+                <!--Button Content="do wypelnienia" Command="{Binding TasksCommand}"/>-->
+                <!--Button Content="do wypelnienia" Command="{Binding TasksCommand}"/>-->
            
                  <Button Content="Play sound" Command="{Binding PlaySound}"/>
         </StackPanel>

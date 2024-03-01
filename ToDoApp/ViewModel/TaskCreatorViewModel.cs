@@ -15,10 +15,19 @@ namespace ToDoApp.ViewModel
         public RelayCommand CancelCommand { get; set; }
         public RelayCommand SaveCommand { get; set; }
         public event EventHandler OnRequestClose;
+        public DateTime TimePick { get; set; }
+        public DateTime TodayDate { get; set; }
+        public string NameField { get; set; }
+        public string DescriptionField { get; set; }
 
+
+        public DateTime DatePick { get; set; }
         public TaskCreatorViewModel()
         {
             tekst = "pocz";
+            TodayDate= DateTime.Now;
+            DatePick = DateTime.Now;
+            TimePick=DateTime.Now;
             SaveCommand = new RelayCommand(ExecuteSave, CanExecuteMyCommand);
             CancelCommand = new RelayCommand(ExecuteCancel,CanExecuteMyCommand);
         }
@@ -32,10 +41,28 @@ namespace ToDoApp.ViewModel
         }
         private void ExecuteSave(object parameter)
         {
-            SoundNotification.PlayNotificationSound();
+            //sprawdzenie czy data nie jest nizsza + sprawdzenie null dla daty i czasu
+            //sprawdzenie null name
 
-            tekst = "dodaj";
-            Trace.WriteLine("dodaj");
+            if (!string.IsNullOrEmpty(NameField))
+            {
+                DateTime dateToAdd = new DateTime(DatePick.Year, DatePick.Month, DatePick.Day, TimePick.Hour, TimePick.Minute, TimePick.Second);
+
+                if (DatePick > TodayDate )
+                {
+                    SoundNotification.PlayNotificationSound();
+                    Trace.WriteLine(NameField);
+                    Trace.WriteLine(DescriptionField);
+                    Trace.WriteLine(dateToAdd);
+                    OnRequestClose?.Invoke(this, EventArgs.Empty);
+                }else MessageBox.Show("problemy");
+
+            } else MessageBox.Show("problemy");
+
+            
+
+            
+
         }
 
     }

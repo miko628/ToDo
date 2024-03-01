@@ -9,5 +9,6 @@
     <Grid Background="YellowGreen">
         
         <Calendar HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+        <Button Height="100" Width="250" VerticalAlignment="Bottom" Content="Synchronizuj" Command="{Binding SynchronizeCommand}"></Button>
     </Grid>
 </UserControl>
