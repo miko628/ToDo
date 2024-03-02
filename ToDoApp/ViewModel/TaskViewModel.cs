@@ -17,12 +17,32 @@ namespace ToDoApp.ViewModel
     class TaskViewModel: ViewModelBase
     {
         private TaskCreatorView taskCreator;
-        public ToDoTask SelectedTask { get; set; }
+        private ToDoTask _selectedTask;
+
+        public event EventHandler ChangeViewRequest;
+        private void OnViewChangeViewRequested()
+        {
+            Trace.WriteLine("zmiana");
+            ChangeViewRequest?.Invoke(this, EventArgs.Empty);
+        }
+
+        public ToDoTask SelectedTask 
+        { 
+            get { return _selectedTask;  }
+            set {
+                //ChangeViewRequest?.Invoke(this, EventArgs.Empty);
+                _selectedTask = value;
+                OnPropertyChanged(nameof(SelectedTask));
+                OnViewChangeViewRequested();
+
+            }
+        }
+        
         public RelayCommand AddTask { get; set; }
         public RelayCommand DeleteTask { get; set; }
         public ObservableCollection<ToDoTask> CurrentTasks { get; set; }
         public RelayCommand Checked { get; set; }
-
+        public RelayCommand MoreCommand { get; set; }
         public TaskViewModel()
         {
             
@@ -30,6 +50,7 @@ namespace ToDoApp.ViewModel
             AddTask = new RelayCommand(ExecuteAddTask, CanExecuteMyCommand);
             DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
             Checked = new RelayCommand(ExecuteDoneTask, CanExecuteMyCommand);
+            //MoreCommand = new RelayCommand((args) => { ChangeViewRequest?.Invoke(this, EventArgs.Empty); }, CanExecuteMyCommand);
             LoadTasks(new object());
         }
         

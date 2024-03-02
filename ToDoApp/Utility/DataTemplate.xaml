@@ -15,5 +15,8 @@
         <view:CalendarView/>
     </DataTemplate>
 
- 
+    <DataTemplate DataType="{x:Type viewModel:TaskInfoViewModel}">
+        <view:TaskInfoView/>
+    </DataTemplate>
+    
 </ResourceDictionary>

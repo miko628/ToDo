@@ -25,13 +25,13 @@
         </Grid.ColumnDefinitions>
 
 
-        <TextBlock Text="Name:" Grid.Row="0" Grid.ColumnSpan="2" Background="Red"/>
+        <TextBlock Text="Name:" Grid.Row="0" Grid.ColumnSpan="2" Background="LightGray"/>
         <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding NameField}" ></TextBox>
-        <TextBlock Text="Description:" Grid.Row="2" Grid.ColumnSpan="2" Background="Red"/>
+        <TextBlock Text="Description:" Grid.Row="2" Grid.ColumnSpan="2" Background="LightGray"/>
         <TextBox Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding DescriptionField}"></TextBox>
-        <TextBlock Text="Podaj datę:" Grid.Row="4" Grid.ColumnSpan="2" Background="Red"/>
+        <TextBlock Text="Podaj datę:" Grid.Row="4" Grid.ColumnSpan="2" Background="LightGray"/>
         <DatePicker Grid.Row="4" Grid.ColumnSpan="2" SelectedDate="{Binding DatePick}" HorizontalAlignment="Left" DisplayDateStart="{Binding TodayDate}" Margin="0,48,0,0" Grid.RowSpan="2" Width="800" FirstDayOfWeek="Monday" DisplayDate="2024-01-03" SelectedDateFormat="Short"></DatePicker>
-        <TextBlock Text="Podaj godzinę:" Grid.Row="6" Grid.ColumnSpan="2" Background="Red"/>
+        <TextBlock Text="Podaj godzinę:" Grid.Row="6" Grid.ColumnSpan="2" Background="LightGray"/>
         <xctk:TimePicker Grid.Row="7" Grid.ColumnSpan="2" Value="{Binding TimePick}"/>
         <Button Grid.Row="8" Grid.Column="1" Command="{Binding SaveCommand}" Content="Zapisz" FontSize="25"/>
         <Button Grid.Row="8" Grid.Column="0" Command="{Binding CancelCommand}" Content="Anuluj" FontSize="25"/>

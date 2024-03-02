@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ToDoApp.ViewModel;
 using ToDoApp.Utility;
+using Org.BouncyCastle.Tls;
 
 namespace ToDoApp.ViewModel
 {
@@ -19,7 +20,8 @@ namespace ToDoApp.ViewModel
         private string _currentTime;
 
         public RelayCommand PlaySound { get; set; }
-      
+        
+
         public string CurrentTime 
         {
             get { return _currentTime; }
@@ -29,25 +31,51 @@ namespace ToDoApp.ViewModel
 
                     }
         }
+        public object CurrentView
+        {
+            get { return _currentView; }
+            set { _currentView = value; OnPropertyChanged(); }
+        }
 
         public RelayCommand HistoryCommand { get; set; }
         public RelayCommand TasksCommand { get; set; }
         public RelayCommand CalendarCommand { get; set; }
 
         private void GoToHistory(object obj) => CurrentView = new HistoryViewModel();
-        private void GoToTasks(object obj) => CurrentView = new TaskViewModel();
+        //private void GoToInfo(object obj) =>CurrentView=new TaskInfoViewModel();
+        private void GoToTasks(object obj) 
+        {
+            var taskViewModel = new TaskViewModel();
+            taskViewModel.ChangeViewRequest += ChangeViewEvent;
+            CurrentView = taskViewModel;
+            Trace.WriteLine(CurrentView.GetType());
+                }
         private void GoToCalendar(object obj) => CurrentView = new CalendarViewModel();
 
-        public object CurrentView 
+        private void ChangeViewEvent(object sender,EventArgs e)
         {
-            get {  return _currentView; }
-            set { _currentView = value; OnPropertyChanged(); }
+            if (CurrentView.GetType() == typeof(TaskInfoViewModel))
+            {
+                var taskViewModel = new TaskViewModel();
+                taskViewModel.ChangeViewRequest += ChangeViewEvent;
+                CurrentView = taskViewModel;
+            }
+            else if (CurrentView.GetType()==typeof(TaskViewModel))
+            {
+                TaskViewModel taskViewModel = CurrentView as TaskViewModel;
+                var taskInfoViewModel = new TaskInfoViewModel(taskViewModel.SelectedTask);
+                taskInfoViewModel.ChangeViewRequest += ChangeViewEvent;
+                CurrentView = taskInfoViewModel;
+                Trace.WriteLine(CurrentView.GetType());
+            }
+
         }
 
 
         public MainViewModel()
         {
             CurrentView = new TaskViewModel();
+            GoToTasks(this);
 
             PlaySound = new RelayCommand(ExecutePlaySound, CanExecuteMyCommand);
             HistoryCommand = new RelayCommand(GoToHistory, CanExecuteMyCommand);
