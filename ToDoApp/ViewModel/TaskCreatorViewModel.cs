@@ -53,6 +53,7 @@ namespace ToDoApp.ViewModel
                     SoundNotification.PlayNotificationSound();
                     Trace.WriteLine(NameField);
                     Trace.WriteLine(DescriptionField);
+                    DbCrud.InsertTask(new ToDoTask(NameField, dateToAdd.ToString(), DateTime.Now.ToString(), DescriptionField, "",""));
                     Trace.WriteLine(dateToAdd);
                     OnRequestClose?.Invoke(this, EventArgs.Empty);
                 }else MessageBox.Show("problemy");
