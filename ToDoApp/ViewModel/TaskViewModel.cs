@@ -106,10 +106,14 @@ namespace ToDoApp.ViewModel
         }
         private void ExecuteDeleteTask(object parameter)
         {
-            if (SelectedTask is not null)
-            {
-                DbCrud.DeleteTask(SelectedTask);
-                LoadTasks(new object());
+            var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Caption", MessageBoxButton.YesNo );
+            if(result == MessageBoxResult.Yes) {
+                if (parameter is not null)
+                {
+                    DbCrud.DeleteTask((ToDoTask)parameter);
+                    LoadTasks(new object());
+                }
+                else MessageBox.Show("Nie poprawny parametr");
             }
         }
 

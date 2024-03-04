@@ -8,12 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="NavajoWhite">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
 
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -22,15 +20,24 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Name:" Grid.Row="0" Grid.ColumnSpan="2" Background="gray"/>
-        <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding NameField}" ></TextBox>
-        <TextBlock Text="Description:" Grid.Row="2" Grid.ColumnSpan="2" Background="gray"/>
-        <TextBox Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding DescriptionField}"></TextBox>
-        <TextBlock Text="Data i godzina:" Grid.Row="4" Grid.ColumnSpan="2" Background="gray"/>
-        <TextBox Grid.Row="5" Grid.ColumnSpan="2" Text="{Binding DateField}"></TextBox>
+        <TextBlock Text="Name:" Grid.Row="0" Background="gray"/>
+        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding NameField}" IsReadOnly="{Binding Disabled}"></TextBox>
+        <TextBlock Text="Description:" Grid.Row="1" Background="gray"/>
+        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding DescriptionField}" IsReadOnly="{Binding Disabled}"></TextBox>
+        <TextBlock Text="Data i godzina:" Grid.Row="2" Background="gray"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding DateField}" IsReadOnly="{Binding Disabled}"></TextBox>
+        <TextBlock Text="Wykonano" Grid.Row="3" Background="gray"/>
+        <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding DoneField}" IsReadOnly="{Binding Disabled}"></TextBox>
+        <Grid Grid.Row="4" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
 
-        <Button Content="Cofnij" Command="{Binding BackCommand}" Grid.Row="6" Grid.Column="0"/>
-        <Button Content="Edytuj" Command="{Binding EditCommand}" Grid.Row="6" Grid.Column="1"/>
-
+            </Grid.ColumnDefinitions>
+        <Button Content="Cofnij" Command="{Binding BackCommand}" Grid.Row="4" Grid.Column="0"/>
+        <Button Content="Usuń" Command="{Binding DeleteCommand}" Grid.Row="4" Grid.Column="1" />
+        <Button Content="Edytuj" Command="{Binding EditCommand}" Grid.Row="4" Grid.Column="2"/>
+        </Grid>
     </Grid>
 </UserControl>

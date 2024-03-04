@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ToDoApp.Utility;
 
 namespace ToDoApp.ViewModel
@@ -43,15 +44,31 @@ namespace ToDoApp.ViewModel
             }
 
         }
+       /* private void ExecuteDeleteTask(object parameter)
+        {
+            var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Caption", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                if (SelectedTask is not null)
+                {
+                    DbCrud.DeleteTask(SelectedTask);
+                    LoadTasks(new object());
+                }
+            }
+        }*/
         private void ExecuteDeleteTask(object parameter)
         {
-            if (SelectedTask is not null)
+            var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Caption", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
             {
-                DbCrud.DeleteTask(SelectedTask);
-                LoadTasks(new object());
+                if (parameter is not null)
+                {
+                    DbCrud.DeleteTask((ToDoTask)parameter);
+                    LoadTasks(new object());
+                }
+                else MessageBox.Show("Nie poprawny parametr");
             }
         }
 
-    
     }
 }
