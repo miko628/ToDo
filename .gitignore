@@ -399,3 +399,5 @@ FodyWeavers.xsd
 *.sln.iml
 
 credentials.json
+token.json
+Google.Apis.Auth.OAuth2.Responses.TokenResponse-user
