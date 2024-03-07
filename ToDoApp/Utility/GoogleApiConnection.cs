@@ -101,10 +101,17 @@ namespace ToDoApp.Utility
                 bool eventExists = false;
                 foreach (var existingEvent in existingEvents.Items)
                 {
-                    if (existingEvent.Summary == task.Name /*&& existingEvent.Start.DateTimeDateTimeOffset == task.TaskToDoDate */ && existingEvent.Description == task.Description)
+                    if (existingEvent.Summary == task.Name && existingEvent.Start.DateTimeDateTimeOffset == task.TaskToDoDate )
                     {
-                        eventExists = true;
-                        break;
+                        if(task.Description=="")
+                        {
+                            if(existingEvent.Description==null)
+                            {
+                                eventExists = true;
+                                break;
+                            }
+                        }else { eventExists = true; break; }
+                        
                     }
                 }
 
