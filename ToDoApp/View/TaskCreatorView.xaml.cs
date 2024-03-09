@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace ToDoApp.View
     /// <summary>
     /// Interaction logic for TaskCreatorView.xaml
     /// </summary>
-    public partial class TaskCreatorView : Window
+    public partial class TaskCreatorView : MetroWindow
     {
         public event EventHandler OnRequestClose;
         public TaskCreatorView()

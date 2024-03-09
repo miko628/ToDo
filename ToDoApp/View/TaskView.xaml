@@ -17,7 +17,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ListView Grid.ColumnSpan="2" Background="DarkOrange" Width="Auto" HorizontalAlignment="Stretch"  ItemsSource="{Binding CurrentTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
+        <ListView Grid.ColumnSpan="2" Width="Auto" HorizontalAlignment="Stretch"  ItemsSource="{Binding CurrentTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
            
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -28,9 +28,9 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="AliceBlue">
+                    <Border >
                         <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" >
-                            <CheckBox HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Done}" Command="{Binding DataContext.Checked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/>
+                            <CheckBox Background="White" HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Done}" Command="{Binding DataContext.Checked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/>
                             <Label ToolTip="{Binding Description}" Content="{Binding Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
                             <Button HorizontalAlignment="Right" Content="X" Command="{Binding DataContext.DeleteTask, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }" Background="Red"/>
                         </Grid>

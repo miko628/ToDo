@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ListView Grid.ColumnSpan="2" Background="LightPink" Width="Auto" HorizontalAlignment="Stretch"  ItemsSource="{Binding HistoryTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
+        <ListView Grid.ColumnSpan="2" Width="Auto" HorizontalAlignment="Stretch"  ItemsSource="{Binding HistoryTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -29,7 +29,7 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="AliceBlue">
+                    <Border >
                         <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" >
                             <CheckBox HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Done, Mode=TwoWay}" Command="{Binding DataContext.Unchecked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/>
                             <Label ToolTip="{Binding Description}" Content="{Binding Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
