@@ -27,16 +27,16 @@
         </Grid.ColumnDefinitions>
 
 
-        <TextBlock Text="Name:" Grid.Row="0" Grid.ColumnSpan="2" Background="LightGray"/>
+        <TextBlock Text="Name:" Grid.Row="0" Grid.ColumnSpan="2" />
         <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding NameField}" ></TextBox>
-        <TextBlock Text="Description:" Grid.Row="2" Grid.ColumnSpan="2" Background="LightGray"/>
+        <TextBlock Text="Description:" Grid.Row="2" Grid.ColumnSpan="2" />
         <TextBox Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding DescriptionField}"></TextBox>
-        <TextBlock Text="Podaj datę:" Grid.Row="4" Grid.ColumnSpan="2" Background="LightGray"/>
+        <TextBlock Text="Podaj datę:" Grid.Row="4" Grid.ColumnSpan="2"/>
 
         <DatePicker Margin="5" Grid.Row="5" Grid.ColumnSpan="2" SelectedDate="{Binding DatePick}"  DisplayDateStart="{Binding TodayDate}" FirstDayOfWeek="Monday" DisplayDate="2024-01-03" />
 
 
-        <TextBlock Text="Podaj godzinę:" Grid.Row="6" Grid.ColumnSpan="2" Background="LightGray"/>
+        <TextBlock Text="Podaj godzinę:" Grid.Row="6" Grid.ColumnSpan="2" />
         <mah:TimePicker Grid.Row="7" Grid.ColumnSpan="2" SelectedDateTime="{Binding TimePick}" Culture="cs-CZ"  Margin="5"/>
         <Button Grid.Row="8" Grid.Column="1" Command="{Binding SaveCommand}" Content="Zapisz" FontSize="25"/>
         <Button Grid.Row="8" Grid.Column="0" Command="{Binding CancelCommand}" Content="Anuluj" FontSize="25"/>

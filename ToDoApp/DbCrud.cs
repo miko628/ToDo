@@ -55,12 +55,13 @@ namespace ToDoApp
 
             if (conn.IsConnect())
             {
-                var Command = new MySqlCommand(query, conn.Connection);
-                using (MySqlDataReader reader = Command.ExecuteReader())
+                try
                 {
-
-                    try
+                    var Command = new MySqlCommand(query, conn.Connection);
+                    using (MySqlDataReader reader = Command.ExecuteReader())
                     {
+
+
 
                         while (reader.Read())
                         {
@@ -69,13 +70,15 @@ namespace ToDoApp
                             new_tasks.Add(task);
 
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        Trace.WriteLine(e.ToString());
-                    }
-                    reader.Close();
 
+
+                        reader.Close();
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(e.ToString());
                 }
             }
             conn.Close();

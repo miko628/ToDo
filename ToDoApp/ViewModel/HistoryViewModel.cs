@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ToDoApp.Model;
 using ToDoApp.Utility;
 
 namespace ToDoApp.ViewModel
 {
     internal class HistoryViewModel: ViewModelBase
     {
+        private HistoryModel historyModel;
         public ObservableCollection<ToDoTask> HistoryTasks { get; set; }
         public ToDoTask SelectedTask { get; set; }
         public RelayCommand Unchecked { get; set; }
@@ -19,6 +21,7 @@ namespace ToDoApp.ViewModel
 
         public HistoryViewModel()
         {
+            historyModel = new HistoryModel();
             HistoryTasks = new ObservableCollection<ToDoTask>();
             LoadTasks(new object());
             Unchecked = new RelayCommand(ExecuteUndoneTask, CanExecuteMyCommand);
@@ -28,46 +31,33 @@ namespace ToDoApp.ViewModel
 
         private void ExecuteUndoneTask(object parameter)
         {
-            //Trace.WriteLine((ToDoTask)parameter);
-            DbCrud.UndoneTask((ToDoTask)parameter);
-            LoadTasks(new object());
+            var task = parameter as ToDoTask;
+            if(historyModel.UndoTask(task))
+            {
+                MessageBox.Show("Pomyslnie zmieniono zadanie.");
+               // instead of messagebox do popup
+            }
+            LoadTasks(this);
         }
 
         private void LoadTasks(object parameter)
         {
             HistoryTasks.Clear();
-            List<ToDoTask> tasks = DbCrud.getHistoryTasks();
-
-            foreach (ToDoTask t in tasks)
+            foreach (ToDoTask t in historyModel.GetAllHistoryTasks())
             {
                 HistoryTasks.Add(t);
             }
 
         }
-       /* private void ExecuteDeleteTask(object parameter)
-        {
-            var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Caption", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
-            {
-                if (SelectedTask is not null)
-                {
-                    DbCrud.DeleteTask(SelectedTask);
-                    LoadTasks(new object());
-                }
-            }
-        }*/
+
         private void ExecuteDeleteTask(object parameter)
         {
-            var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Caption", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
+            var task= parameter as ToDoTask;
+            if(historyModel.DeleteTask(task))
             {
-                if (parameter is not null)
-                {
-                    DbCrud.DeleteTask((ToDoTask)parameter);
-                    LoadTasks(new object());
-                }
-                else MessageBox.Show("Nie poprawny parametr");
-            }
+                MessageBox.Show("Pomyslnie usunieto zadanie.");
+                // instead of messagebox use popup
+            }else MessageBox.Show("Wystapil problem przy probie usuniecia zadania.");
         }
 
     }

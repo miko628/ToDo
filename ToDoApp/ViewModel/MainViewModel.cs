@@ -57,11 +57,15 @@ namespace ToDoApp.ViewModel
                 Application.Current.Resources.MergedDictionaries[0].Source =
             new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml");
                 Trace.WriteLine("should be light");
+
+                // should be changed
             }, CanExecuteMyCommand);
             DarkThemeCommand = new RelayCommand((object parameters) => {
                 Application.Current.Resources.MergedDictionaries[0].Source =
             new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml");
                 Trace.WriteLine("should be dark");
+                // should be changed
+
             }, CanExecuteMyCommand);
             ToDoApp.Utility.Timer timer = new ToDoApp.Utility.Timer();
             timer.Tick += Timer_Tick;
@@ -69,6 +73,7 @@ namespace ToDoApp.ViewModel
             //ThemeManager.Current.ChangeTheme(this, "Dark.Green");
             Application.Current.Resources.MergedDictionaries[0].Source =
             new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml");
+            // should be changed
 
         }
 

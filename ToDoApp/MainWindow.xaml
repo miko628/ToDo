@@ -33,7 +33,7 @@
 
         <!-- Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="3" Background="#2f5cb6"/ -->
         <Border Grid.Column ="1" Grid.ColumnSpan="2" Grid.Row="0"  >
-            <TextBlock Text= "{Binding CurrentTime}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" FontFamily="Lato" />
+            <TextBlock Text= "{Binding CurrentTime}" Foreground="{DynamicResource AccentColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" FontFamily="Lato" />
         </Border>
 
 

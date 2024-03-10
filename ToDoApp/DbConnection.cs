@@ -46,15 +46,26 @@ namespace ToDoApp
                 string connstring = string.Format("user='root',password='notSecureChangeMe',host='127.0.0.1', port='82',database='ToDoApp'");
                 Connection = new MySqlConnection(builder.ConnectionString);
                 //Connection = new MySqlConnection(connstring);
-                Connection.Open();
+                try
+                { Connection.Open(); }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex, "Database connection failed.");
+                    return false;
+                }
                 
             }else if (Connection.State == System.Data.ConnectionState.Closed)
             {
-                Connection.Open();
+                try
+                { Connection.Open(); }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex, "Database connection failed.");
+                    return false;
+                }
             }
 
 
-            Trace.WriteLine("koniec ? sie");
 
             return true;
         }

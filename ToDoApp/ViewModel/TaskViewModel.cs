@@ -9,8 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using ToDoApp.Model;
 using ToDoApp.Utility;
 using ToDoApp.View;
+using ToDoApp.Model;
 
 namespace ToDoApp.ViewModel
 {
@@ -18,11 +20,10 @@ namespace ToDoApp.ViewModel
     {
         private TaskCreatorView taskCreator;
         private ToDoTask _selectedTask;
-
+        private TaskModel taskModel;
         public event EventHandler ChangeViewRequest;
         private void OnViewChangeViewRequested()
         {
-            Trace.WriteLine("zmiana");
             ChangeViewRequest?.Invoke(this, EventArgs.Empty);
         }
 
@@ -45,21 +46,19 @@ namespace ToDoApp.ViewModel
         public RelayCommand MoreCommand { get; set; }
         public TaskViewModel()
         {
-            
+            taskModel = new TaskModel();   
             CurrentTasks = new ObservableCollection<ToDoTask>();
             AddTask = new RelayCommand(ExecuteAddTask, CanExecuteMyCommand);
             DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
             Checked = new RelayCommand(ExecuteDoneTask, CanExecuteMyCommand);
             //MoreCommand = new RelayCommand((args) => { ChangeViewRequest?.Invoke(this, EventArgs.Empty); }, CanExecuteMyCommand);
-            LoadTasks(new object());
+            LoadTasks(this);
         }
         
         private void LoadTasks(object parameter)
         {
-            CurrentTasks.Clear();
-            List<ToDoTask> tasks = DbCrud.getCurrentTasks();
-            
-            foreach (ToDoTask t in tasks)
+            CurrentTasks.Clear();            
+            foreach (ToDoTask t in taskModel.GetAllTasks())
             {
                 CurrentTasks.Add(t);
             }
@@ -69,8 +68,9 @@ namespace ToDoApp.ViewModel
         private void ExecuteDoneTask(object parameter) 
         {
             //Trace.WriteLine((ToDoTask)parameter);
-            DbCrud.DoneTask((ToDoTask)parameter);
-            LoadTasks(new object());
+            var task = parameter as ToDoTask;
+            taskModel.DoneTask(task);
+            LoadTasks(this);
         }
 
         private void ExecuteAddTask(object parameter)
@@ -102,19 +102,16 @@ namespace ToDoApp.ViewModel
         {
             // Usuń referencję do zamkniętego okna
             taskCreator = null;
-            LoadTasks(new object());
+            LoadTasks(this);
         }
         private void ExecuteDeleteTask(object parameter)
         {
-            var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Caption", MessageBoxButton.YesNo );
-            if(result == MessageBoxResult.Yes) {
-                if (parameter is not null)
-                {
-                    DbCrud.DeleteTask((ToDoTask)parameter);
-                    LoadTasks(new object());
-                }
-                else MessageBox.Show("Nie poprawny parametr");
+            var task = parameter as ToDoTask;
+            if (taskModel.DeleteTask(task))
+            {
+                LoadTasks(this);
             }
+            else MessageBox.Show("Nie udalo sie usunac zadania!");
         }
 
        
