@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ToDoApp.Utility;
 
 namespace ToDoApp.Model
 {
@@ -13,11 +15,24 @@ namespace ToDoApp.Model
         {
             if (task is not null)
             {
-                DbCrud.UndoneTask(task);
+                try
+                {
+                    DbCrud.UndoneTask(task);
+
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex,"Problem przy zmianie zadania.(HistoryModel)");
+                    return false;
+                }
                 //add exceptions
-                return true;
+
             }
             else return false;
+
+            SoundNotification.PlayNotificationSound();
+            return true;
+
         }
         public List<ToDoTask> GetAllHistoryTasks()
         {
@@ -39,6 +54,8 @@ namespace ToDoApp.Model
                     return false;
                 }
             }
+            else return false;
+
             return true;
         }
     }

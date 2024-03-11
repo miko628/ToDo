@@ -23,7 +23,7 @@ namespace ToDoApp.ViewModel
         {
             historyModel = new HistoryModel();
             HistoryTasks = new ObservableCollection<ToDoTask>();
-            LoadTasks(new object());
+            LoadTasks(this);
             Unchecked = new RelayCommand(ExecuteUndoneTask, CanExecuteMyCommand);
             DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
 
@@ -32,11 +32,12 @@ namespace ToDoApp.ViewModel
         private void ExecuteUndoneTask(object parameter)
         {
             var task = parameter as ToDoTask;
-            if(historyModel.UndoTask(task))
+            if (historyModel.UndoTask(task))
             {
                 MessageBox.Show("Pomyslnie zmieniono zadanie.");
-               // instead of messagebox do popup
+                // instead of messagebox do popup
             }
+            else MessageBox.Show("Wystapil blad przy zmianie zadania!");
             LoadTasks(this);
         }
 

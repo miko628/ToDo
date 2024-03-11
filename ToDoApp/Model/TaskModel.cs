@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ToDoApp.Utility;
 
 namespace ToDoApp.Model
 {
@@ -26,7 +27,7 @@ namespace ToDoApp.Model
         }
         public bool DeleteTask(ToDoTask? task)
         {
-            var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Caption", MessageBoxButton.YesNo);
+            var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Usuwanie zadania", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 if (task is not null)
@@ -40,7 +41,14 @@ namespace ToDoApp.Model
                     return false;
                 }
             }
+            else return false;
+            SoundNotification.PlayNotificationSound();
+
             return true;
+        }
+        public void ShowTaskCreator()
+        {
+
         }
     }
 }

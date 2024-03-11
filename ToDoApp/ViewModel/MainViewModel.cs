@@ -54,15 +54,14 @@ namespace ToDoApp.ViewModel
             TasksCommand = new RelayCommand(GoToTasks, CanExecuteMyCommand);
             CalendarCommand = new RelayCommand(GoToCalendar, CanExecuteMyCommand);
             LightThemeCommand = new RelayCommand((object parameters) => {
-                Application.Current.Resources.MergedDictionaries[0].Source =
-            new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml");
+            ThemeManager.Current.ChangeTheme(App.Current, "Light.Blue", false);
                 Trace.WriteLine("should be light");
 
                 // should be changed
             }, CanExecuteMyCommand);
             DarkThemeCommand = new RelayCommand((object parameters) => {
-                Application.Current.Resources.MergedDictionaries[0].Source =
-            new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml");
+                ThemeManager.Current.ChangeTheme(App.Current, "Dark.Blue", false);
+
                 Trace.WriteLine("should be dark");
                 // should be changed
 
@@ -71,8 +70,9 @@ namespace ToDoApp.ViewModel
             timer.Tick += Timer_Tick;
             timer.Start();
             //ThemeManager.Current.ChangeTheme(this, "Dark.Green");
-            Application.Current.Resources.MergedDictionaries[0].Source =
-            new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml");
+           ThemeManager.Current.ChangeTheme(App.Current, "Light.Blue", false);
+            //Application.Current.Resources.MergedDictionaries[0].Source =
+            //new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml");
             // should be changed
 
         }
@@ -115,11 +115,11 @@ namespace ToDoApp.ViewModel
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            CurrentTime = DateTime.Now.ToString(); // Aktualizujemy bieżący czas za każdym razem, gdy zdarzenie Tick zostanie wywołane
+            CurrentTime = DateTime.Now.ToString(); 
         }
 
 
-        private bool ExecuteCommand(object parameter)
+    /*    private bool ExecuteCommand(object parameter)
         {
             if (Application.Current.MainWindow != null)
             {
@@ -128,17 +128,8 @@ namespace ToDoApp.ViewModel
             else return false;
             //_canExecute = !_canExecute;
             // return _canExecute;
-        }
-        private void showDBTasks()
-        {
-            var dbCon = DbConnection.Instance();
-            List<Task> new_task = new List<Task>();
-            //new_task = dbCon.GetAllTasks();
-            foreach (var task in new_task)
-            {
-               // CurrentTasks.Add(task);
-            }
-        }
+        }*/
+       
        
         private void ExecutePlaySound(object parameter)
         {

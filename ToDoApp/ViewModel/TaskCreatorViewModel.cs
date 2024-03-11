@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ToDoApp.Model;
 using ToDoApp.Utility;
 
 namespace ToDoApp.ViewModel
 {
     internal class TaskCreatorViewModel : ViewModelBase
     {
+        private TaskCreatorModel creatorModel;
         public string tekst { get; set; }
         public RelayCommand CancelCommand { get; set; }
         public RelayCommand SaveCommand { get; set; }
@@ -24,10 +26,11 @@ namespace ToDoApp.ViewModel
         public DateTime DatePick { get; set; }
         public TaskCreatorViewModel()
         {
-            tekst = "pocz";
+            //tekst = "pocz";
+            creatorModel=new TaskCreatorModel();
             TodayDate= DateTime.Now;
             DatePick = DateTime.Now;
-            TimePick=DateTime.Now;
+            TimePick= DateTime.Now;
             SaveCommand = new RelayCommand(ExecuteSave, CanExecuteMyCommand);
             CancelCommand = new RelayCommand(ExecuteCancel,CanExecuteMyCommand);
         }
@@ -43,25 +46,21 @@ namespace ToDoApp.ViewModel
         {
             //sprawdzenie czy data nie jest nizsza + sprawdzenie null dla daty i czasu
             //sprawdzenie null name
-
-            if (!string.IsNullOrEmpty(NameField))
+            DateTime dateToAdd = new DateTime(DatePick.Year, DatePick.Month, DatePick.Day, TimePick.Hour, TimePick.Minute, TimePick.Second);
+            DateTime now = DateTime.Now;
+            if (!string.IsNullOrEmpty(NameField) && dateToAdd >= now)
             {
-                DateTime dateToAdd = new DateTime(DatePick.Year, DatePick.Month, DatePick.Day, TimePick.Hour, TimePick.Minute, TimePick.Second);
+                Trace.WriteLine(dateToAdd.ToString()+ "\n" + now.ToString());
 
-                if (DatePick > TodayDate )
+                if (creatorModel.SaveTask(NameField, dateToAdd, DescriptionField))
                 {
-                    SoundNotification.PlayNotificationSound();
-                    Trace.WriteLine(NameField);
-                    Trace.WriteLine(DescriptionField);
-                    var task = new ToDoTask(NameField, dateToAdd.ToString(), DateTime.Now.ToString(), DescriptionField, "", "");
-                    DbCrud.InsertTask(task);
-                    Trace.WriteLine(dateToAdd);
-                    Trace.WriteLine(task.TaskToDoDate);
                     OnRequestClose?.Invoke(this, EventArgs.Empty);
-                }else MessageBox.Show("problemy");
 
-            } else MessageBox.Show("problemy");
-
+                }
+                else MessageBox.Show("Błąd przy próbie stworzenia zadania!");
+            }
+            else MessageBox.Show("Błąd przy próbie stworzenia zadania!");
+           
             
 
             

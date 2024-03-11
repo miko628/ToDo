@@ -32,8 +32,8 @@
 
 
         <!-- Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="3" Background="#2f5cb6"/ -->
-        <Border Grid.Column ="1" Grid.ColumnSpan="2" Grid.Row="0"  >
-            <TextBlock Text= "{Binding CurrentTime}" Foreground="{DynamicResource AccentColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" FontFamily="Lato" />
+        <Border Grid.Column ="1" Grid.ColumnSpan="2" Grid.Row="0" Background="{DynamicResource MahApps.Brushes.Critical}" >
+            <TextBlock Text= "{Binding CurrentTime}" Foreground="{DynamicResource MahApps.Brushes.Text}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" FontFamily="Lato" />
         </Border>
 
 
@@ -52,7 +52,7 @@
             </StackPanel>
         </Expander>
 
-        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="8" >
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="8">
             <ContentControl x:Name="Views"
                             Content="{Binding CurrentView}">
             </ContentControl>
