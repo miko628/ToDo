@@ -6,6 +6,13 @@
              xmlns:local="clr-namespace:ToDoApp.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Resource/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
@@ -29,7 +36,7 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="1" Padding="5">
+                    <Border Style="{StaticResource AccentBorder}">
                         <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{DynamicResource AccentColor}" >
                             <CheckBox Background="White" HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Done}" Command="{Binding DataContext.Checked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/>
                             <Label FontSize="32" ToolTip="{Binding Description}" Content="{Binding Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>

@@ -3,6 +3,10 @@
                     xmlns:view="clr-namespace:ToDoApp.View"
                     xmlns:viewModel="clr-namespace:ToDoApp.ViewModel">
     
+    <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
+        <view:MainWindow/>
+    </DataTemplate>
+    
     <DataTemplate DataType="{x:Type viewModel:HistoryViewModel}">
         <view:HistoryView/>
     </DataTemplate>
@@ -18,5 +22,7 @@
     <DataTemplate DataType="{x:Type viewModel:TaskInfoViewModel}">
         <view:TaskInfoView/>
     </DataTemplate>
+
+    
     
 </ResourceDictionary>

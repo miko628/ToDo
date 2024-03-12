@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data.Common;
 using System.Windows;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace ToDoApp
 {
@@ -43,7 +44,7 @@ namespace ToDoApp
 
             if (Connection == null)
             {
-                string connstring = string.Format("user='root',password='notSecureChangeMe',host='127.0.0.1', port='82',database='ToDoApp'");
+                string connstring = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
                 Connection = new MySqlConnection(builder.ConnectionString);
                 //Connection = new MySqlConnection(connstring);
                 try

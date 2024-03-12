@@ -10,7 +10,6 @@
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -29,7 +28,7 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border >
+                    <Border Style="{StaticResource AccentBorder}">
                         <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" >
                             <CheckBox HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Done, Mode=TwoWay}" Command="{Binding DataContext.Unchecked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/>
                             <Label ToolTip="{Binding Description}" Content="{Binding Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
