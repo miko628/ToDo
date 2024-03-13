@@ -31,7 +31,7 @@
                     <Border Style="{StaticResource AccentBorder}">
                         <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" >
                             <CheckBox HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Done, Mode=TwoWay}" Command="{Binding DataContext.Unchecked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/>
-                            <Label ToolTip="{Binding Description}" Content="{Binding Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+                            <Label FontSize="32" ToolTip="{Binding Description}" Content="{Binding Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
                             <Button HorizontalAlignment="Right" Content="X" Command="{Binding DataContext.DeleteTask, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }" Background="Red"/>
                         </Grid>
                     </Border>

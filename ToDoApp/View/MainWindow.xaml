@@ -12,7 +12,7 @@
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
-    <Grid>
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -31,24 +31,24 @@
         </Grid.ColumnDefinitions>
 
 
-        <!-- Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="3" Background="#2f5cb6"/ -->
-        <Border Grid.Column ="1" Grid.ColumnSpan="2" Grid.Row="0" Background="{DynamicResource MahApps.Brushes.Accent}" >
+        <Grid Grid.Column ="1" Grid.ColumnSpan="2" Grid.Row="0" Background="{DynamicResource MahApps.Brushes.Accent}">
+        <Border  Background="{DynamicResource MahApps.Brushes.Highlight}" CornerRadius="10" >
             <TextBlock Text= "{Binding CurrentTime}" Foreground="{DynamicResource MahApps.Brushes.Text}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" FontFamily="Lato" />
         </Border>
+        </Grid>
 
-
-        <Expander Grid.Row="0" Grid.RowSpan="8" ExpandDirection="Left" HorizontalAlignment="Left" VerticalAlignment="Stretch" >
+        <Expander  Grid.Row="0" Grid.RowSpan="8" ExpandDirection="Left" HorizontalAlignment="Left" VerticalAlignment="Stretch" >
         <StackPanel  >
-                <Button Content="Zadania" Command="{Binding TasksCommand}"/>
-                <Button Content="Historia" Command="{Binding HistoryCommand}"/>
+                <Button Style="{StaticResource MenuButton}" Content="Zadania" Command="{Binding TasksCommand}"/>
+                <Button Style="{StaticResource MenuButton}" Content="Historia" Command="{Binding HistoryCommand}"/>
 
-                <Button Content="Kalendarz" Command="{Binding CalendarCommand}"/>
+                <Button Style="{StaticResource MenuButton}" Content="Kalendarz" Command="{Binding CalendarCommand}"/>
 
                 <!--Button Content="do wypelnienia" Command="{Binding TasksCommand}"/>-->
                 <!--Button Content="do wypelnienia" Command="{Binding TasksCommand}"/>-->
-           
-                 <Button Content="Play sound" Command="{Binding PlaySound}"/>
-                <mah:ToggleSwitch  OffContent="Jasny Motyw" OnContent="Ciemny Motyw" OnCommand="{Binding DarkThemeCommand}" OffCommand="{Binding LightThemeCommand}"/>
+
+                <Button Style="{StaticResource MenuButton}" Content="Play sound" Command="{Binding PlaySound}"/>
+                <mah:ToggleSwitch FontSize="32" OffContent="Jasny Motyw" OnContent="Ciemny Motyw" OnCommand="{Binding DarkThemeCommand}" OffCommand="{Binding LightThemeCommand}"/>
             </StackPanel>
         </Expander>
 

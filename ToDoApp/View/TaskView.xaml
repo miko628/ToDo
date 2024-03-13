@@ -13,7 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid >
+    <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
@@ -32,12 +32,17 @@
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="Margin" Value="0" />
                     <Setter Property="Padding" Value="0" />
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Style.Resources>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Style="{StaticResource AccentBorder}">
-                        <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{DynamicResource AccentColor}" >
+                        <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" >
                             <CheckBox Background="White" HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Done}" Command="{Binding DataContext.Checked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/>
                             <Label FontSize="32" ToolTip="{Binding Description}" Content="{Binding Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
                             <Button HorizontalAlignment="Right" Content="X" Command="{Binding DataContext.DeleteTask, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }" Background="Red" Foreground="Black"/>
@@ -48,6 +53,6 @@
         </ListView>
         <!--         <Button Grid.Row="2" Grid.Column="0" Command="{Binding DeleteTask}" Content="Delete" FontSize="25"/>
  -->
-        <Button Grid.Row="2" Grid.ColumnSpan="2" Command="{Binding AddTask}" Content="Dodaj zadanie" FontSize="25"/>
+        <Button Style="{StaticResource AppButton}" Grid.Row="2" Grid.ColumnSpan="2" Command="{Binding AddTask}" Content="Dodaj zadanie" FontSize="25"/>
     </Grid>
 </UserControl>

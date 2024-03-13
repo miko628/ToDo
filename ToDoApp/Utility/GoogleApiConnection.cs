@@ -97,6 +97,7 @@ namespace ToDoApp.Utility
                 body.Start = start;
                 body.End = start;
                 //eventsToAdd.Add(body);
+                // try catch
                 Events existingEvents = service.Events.List("primary").Execute();
                 bool eventExists = false;
                 foreach (var existingEvent in existingEvents.Items)
