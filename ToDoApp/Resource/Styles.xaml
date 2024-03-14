@@ -14,22 +14,19 @@
 
     <Style x:Key="MenuButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}"/>
-        <Setter Property="BorderThickness" Value="0.5"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="FontSize" Value="40"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="0"/>
-        <Style.Resources>
-            <SolidColorBrush x:Key="MahApps.Brushes.ControlMouseOverBackground" Color="Yellow" />
-            <SolidColorBrush x:Key="MahApps.Brushes.ControlMouseOverForeground" Color="Yellow" />
 
-        </Style.Resources>
     </Style>
 
+    
     <Style x:Key="AppButton" TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TheneForeground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}"/>
         <Setter Property="FontSize" Value="32"/>
         <Setter Property="Margin" Value="1"/>
         <Style.Resources>

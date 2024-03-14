@@ -8,9 +8,6 @@
         mc:Ignorable="d"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         Title="To Do Application" Height="450" Width="800">
-    <Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
 
     <Grid >
         <Grid.RowDefinitions>
@@ -37,7 +34,7 @@
         </Border>
         </Grid>
 
-        <Expander  Grid.Row="0" Grid.RowSpan="8" ExpandDirection="Left" HorizontalAlignment="Left" VerticalAlignment="Stretch" >
+        <Expander  Grid.Row="0" Grid.RowSpan="8" ExpandDirection="Left" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0" Padding="0" >
         <StackPanel  >
                 <Button Style="{StaticResource MenuButton}" Content="Zadania" Command="{Binding TasksCommand}"/>
                 <Button Style="{StaticResource MenuButton}" Content="Historia" Command="{Binding HistoryCommand}"/>

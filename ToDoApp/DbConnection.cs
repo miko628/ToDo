@@ -13,11 +13,6 @@ namespace ToDoApp
 {
     class DbConnection
     {
-        private string server;
-        private string databasename;
-        private string username;
-        private string password;
-        private string port;
         public MySqlConnection Connection { get; set; }
 
         private static DbConnection _instance = null;
@@ -30,23 +25,12 @@ namespace ToDoApp
         }
         public bool IsConnect()
         {
-            var builder = new MySqlConnectionStringBuilder
-            {
-                Server = "127.0.0.1",
-                Port = 82,
-                UserID = "root",
-                Password = "notSecureChangeMe",
-                Database = "ToDoApp",
-                
-            };
 
-            
 
             if (Connection == null)
             {
                 string connstring = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
-                Connection = new MySqlConnection(builder.ConnectionString);
-                //Connection = new MySqlConnection(connstring);
+                Connection = new MySqlConnection(connstring);
                 try
                 { Connection.Open(); }
                 catch (Exception ex)

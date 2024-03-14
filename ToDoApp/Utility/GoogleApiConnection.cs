@@ -43,7 +43,7 @@ namespace ToDoApp.Utility
             });
 
         }
-        public void GetAllTasks()
+        public Events GetAllTasks()
         {
             EventsResource.ListRequest request = service.Events.List("primary");
             request.TimeMin = DateTime.Now;
@@ -51,24 +51,16 @@ namespace ToDoApp.Utility
             request.SingleEvents = true;
             request.MaxResults = 10;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
+            //List<Event> events=new List<Event>();
             // List events.
             Events events = request.Execute();
-            Trace.WriteLine("Upcoming events:");
             if (events.Items == null || events.Items.Count == 0)
             {
                 Trace.WriteLine("No upcoming events found.");
-                return;
+                return events;
             }
-            foreach (var eventItem in events.Items)
-            {
-                string when = eventItem.Start.DateTime.ToString();
-                if (String.IsNullOrEmpty(when))
-                {
-                    when = eventItem.Start.Date;
-                }
-                Trace.WriteLine(eventItem.Summary, when);
-            }
+          
+            return events;
         }
         public void PostTask(ToDoTask task)
         {
