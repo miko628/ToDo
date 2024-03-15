@@ -1,4 +1,5 @@
 ﻿using Google.Apis.Calendar.v3.Data;
+using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,21 +16,47 @@ namespace ToDoApp.Model
         {
             
         }
-        public List<ToDoTask> GetGoogleTaks()
+        public Events? GetGoogleTaks()
         {
-            List<ToDoTask> tasks = new List<ToDoTask>();
+            //List<Event> tasks = new List<ToDoTask>();
+            Events events;
             try
             {
                 GoogleApiConnection apiConnection = new GoogleApiConnection();
-                Events events = apiConnection.GetAllTasks();
-                
+                events = apiConnection.GetAllTasks();
+                foreach(var item in events.Items)
+                {
+                    Trace.WriteLine("name (summary) :"+item.Summary);
+                    Trace.WriteLine("description :" + item.Description);
+                    Trace.WriteLine("start :" + item.Start.DateTime);
+                    Trace.WriteLine("end :" + item.End.DateTime);
+                    Trace.WriteLine("done :" + item.Status);
+
+
+                    //tasks.Add(new ToDoTask(item.etag));
+                }
             }
             catch(Exception ex) 
             {
             Trace.WriteLine(ex,"Problem z wczytaniem zadan z kalendarza google (CalendarModel).");
                 return null;
             }
-            return tasks;
+            return events;
+        }
+
+        public bool SynchronizeTasks()
+        {
+            try
+            {
+                GoogleApiConnection api = new GoogleApiConnection();
+                List<ToDoTask> tasks = DbCrud.getCurrentTasks();
+                api.SyncrhonizeTasks(tasks);
+            }
+            catch (Exception ex) 
+            {
+                Trace.WriteLine(ex, "Bląd przy próbie synchronizacji zadań. (CalendarModel)");
+            }
+            return true;
         }
 
     }

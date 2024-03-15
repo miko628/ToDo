@@ -57,6 +57,10 @@ namespace ToDoApp.Utility
             if (events.Items == null || events.Items.Count == 0)
             {
                 Trace.WriteLine("No upcoming events found.");
+                foreach(var x in events.Items)
+                {
+                    Trace.WriteLine(x);
+                }
                 return events;
             }
           
