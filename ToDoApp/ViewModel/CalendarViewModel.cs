@@ -3,20 +3,50 @@ using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ToDoApp.Model;
 using ToDoApp.Utility;
+using ToDoApp.View;
 
 namespace ToDoApp.ViewModel
 {
     class CalendarViewModel : ViewModelBase
     {
         private CalendarModel calendarModel;
+        private Event _selectedTask;
         public ObservableCollection<Event> CurrentTasks { get; set; }
 
         public RelayCommand SynchronizeCommand { get; set; }
+        public RelayCommand DeleteCommand { get; set; }
+        public event EventHandler ChangeViewRequest;
+
+        private void OnViewChangeViewRequested()
+        {
+            Trace.WriteLine("Wysylam calendarviewmodel evenr");
+            ChangeViewRequest?.Invoke(this, EventArgs.Empty);
+        }
+
+        public Event? SelectedTask
+        {
+            get { return _selectedTask; }
+            set
+            {
+                //ChangeViewRequest?.Invoke(this, EventArgs.Empty);
+                if (value is not null)
+                {
+                    _selectedTask = value;
+                    OnPropertyChanged(nameof(SelectedTask));
+                    OnViewChangeViewRequested();
+                }
+
+
+            }
+        }
+
         public CalendarViewModel() 
         {
             CurrentTasks = new ObservableCollection<Event>();
@@ -24,8 +54,20 @@ namespace ToDoApp.ViewModel
             calendarModel= new CalendarModel();
             LoadTasks();
             SynchronizeCommand = new RelayCommand(ExecuteSyncTasks, CanExecuteMyCommand);
+            DeleteCommand = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
             //api.PostTask(new ToDoTask("nazwa", DateTime.Now.ToString(), DateTime.Now.ToString(), "","",null));
         }
+        private void ExecuteDeleteTask(object parameter)
+        {
+          /*  var task = parameter as ToDoTask;
+            if (taskModel.DeleteTask(task))
+            {
+                LoadTasks();
+            }
+            else MessageBox.Show("Nie udalo sie usunac zadania!");*/
+          //to do
+        }
+
         private void LoadTasks()
         {
             CurrentTasks.Clear();

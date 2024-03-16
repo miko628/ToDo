@@ -6,7 +6,14 @@
              xmlns:local="clr-namespace:ToDoApp.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Resource/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
@@ -16,26 +23,15 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListView Grid.ColumnSpan="2" Width="Auto" HorizontalAlignment="Stretch"  ItemsSource="{Binding CurrentTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
-
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="Padding" Value="0" />
-                    <Style.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Style.Resources>
-                </Style>
-            </ListView.ItemContainerStyle>
+        <ListView Style="{StaticResource DefaultListView}" Grid.ColumnSpan="2" Width="Auto" HorizontalAlignment="Stretch"  ItemsSource="{Binding CurrentTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Style="{StaticResource AccentBorder}">
                         <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" >
-                            <CheckBox Background="White" HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Status}" Command="{Binding DataContext.Checked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/>
+                            <!-- <CheckBox Background="White" HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Status}" Command="{Binding DataContext.Checked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/> -->
                             <Label FontSize="32" ToolTip="{Binding Description}" Content="{Binding Summary}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+                            <Button HorizontalAlignment="Right" Content="X" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }" Background="Red" Foreground="Black"/>
+
                         </Grid>
                     </Border>
                 </DataTemplate>

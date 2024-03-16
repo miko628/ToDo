@@ -85,29 +85,55 @@ namespace ToDoApp.ViewModel
         private void GoToTasks(object obj) 
         {
             var taskViewModel = new TaskViewModel();
-            taskViewModel.ChangeViewRequest += ChangeViewEvent;
+            taskViewModel.ChangeViewRequest += ChangeViewApp;
             CurrentView = taskViewModel;
             Trace.WriteLine(CurrentView.GetType());
                 }
-        private void GoToCalendar(object obj) => CurrentView = new CalendarViewModel();
-
-        private void ChangeViewEvent(object sender,EventArgs e)
+        private void GoToCalendar(object obj)
         {
-            if (CurrentView.GetType() == typeof(TaskInfoViewModel))
+            var calendarViewModel = new CalendarViewModel();
+            calendarViewModel.ChangeViewRequest+=ChangeViewAPI;
+            CurrentView = calendarViewModel;
+            Trace.WriteLine(CurrentView.GetType());
+
+        }
+
+        private void ChangeViewApp(object sender,EventArgs e)
+        {
+            if (CurrentView.GetType() == typeof(TaskInfoViewModel)) // changeview event from taskinfo
             {
                 var taskViewModel = new TaskViewModel();
-                taskViewModel.ChangeViewRequest += ChangeViewEvent;
+                taskViewModel.ChangeViewRequest += ChangeViewApp;
                 CurrentView = taskViewModel;
             }
-            else if (CurrentView.GetType()==typeof(TaskViewModel))
+            else if (CurrentView.GetType()==typeof(TaskViewModel)) // changeview event from task
             {
                 TaskViewModel taskViewModel = CurrentView as TaskViewModel;
                 var taskInfoViewModel = new TaskInfoViewModel(taskViewModel.SelectedTask);
-                taskInfoViewModel.ChangeViewRequest += ChangeViewEvent;
+                taskInfoViewModel.ChangeViewRequest += ChangeViewApp;
                 CurrentView = taskInfoViewModel;
                 Trace.WriteLine(CurrentView.GetType());
             }
 
+        }
+        private void ChangeViewAPI(object sender,EventArgs e)
+        {
+            Trace.WriteLine("otrzymalem changeviewapi !!!");
+
+            if (CurrentView.GetType() == typeof(CalendarViewModel)) //change view event from calendar
+            {
+                CalendarViewModel calendarViewModel = CurrentView as CalendarViewModel;
+                var googleInfoViewModel = new GoogleTaskInfoViewModel(calendarViewModel.SelectedTask);
+                googleInfoViewModel.ChangeViewRequest += ChangeViewAPI;
+                CurrentView = googleInfoViewModel;
+                //  var calendarTaskInfoViewModel=new 
+            }
+            else if (CurrentView.GetType() == typeof(GoogleTaskInfoViewModel)) // change view event from googletaskinfo
+            {
+                var calendarViewModel = new CalendarViewModel();
+                calendarViewModel.ChangeViewRequest += ChangeViewAPI;
+                CurrentView = calendarViewModel;
+            }
         }
 
 

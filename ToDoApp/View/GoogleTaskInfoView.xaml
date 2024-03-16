@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="ToDoApp.View.GoogleTaskInfoView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDoApp.View"
+        mc:Ignorable="d"
+        Height="450" Width="800">
+    <Grid>
+        <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Nazwa:" Grid.Row="0" Style="{StaticResource DefaultTextBlock}"/>
+            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding NameField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource DefaultTextBox}"/>
+            <TextBlock Text="Opis:" Grid.Row="1"  Style="{StaticResource DefaultTextBlock}"/>
+            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding DescriptionField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource DefaultTextBox}"/>
+            <TextBlock Text="Data i godzina:" Grid.Row="2"  Style="{StaticResource DefaultTextBlock}"/>
+            <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding DateField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource DefaultTextBox}"/>
+            <TextBlock Text="Wykonano" Grid.Row="3"  Style="{StaticResource DefaultTextBlock}"/>
+            <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding DoneField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource DefaultTextBox}"/>
+            <Grid Grid.Row="4" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+                <Button Content="Cofnij" Command="{Binding BackCommand}" Style="{StaticResource AppButton}" Grid.Row="4" Grid.Column="0"/>
+                <Button Content="Usuń" Command="{Binding DeleteCommand}" Style="{StaticResource AppButton}" Grid.Row="4" Grid.Column="1" />
+                <Button Content="Edytuj" Command="{Binding EditCommand}" Style="{StaticResource AppButton}" Grid.Row="4" Grid.Column="2"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
