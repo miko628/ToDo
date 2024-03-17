@@ -24,6 +24,8 @@ namespace ToDoApp.ViewModel
         public RelayCommand BackCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
         public RelayCommand EditCommand { get; set; }
+        public RelayCommand CancelCommand { get; set; }
+        public RelayCommand SaveCommand { get; set; }
 
         public GoogleTaskInfoViewModel(Event task)
         {
@@ -36,16 +38,24 @@ namespace ToDoApp.ViewModel
             BackCommand = new RelayCommand((e) => { OnViewChangeViewRequested(); }, CanExecuteMyCommand);
             DeleteCommand = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
             EditCommand = new RelayCommand(ExecuteEditTask, CanExecuteMyCommand);
+            CancelCommand = new RelayCommand(ExecuteCancel, CanExecuteMyCommand);
+            SaveCommand = new RelayCommand(ExecuteSave, CanExecuteMyCommand);
         }
         private void ExecuteEditTask(object parameter)
         {
-            if (Disabled == true)
-            {
-                Disabled = false;
-            }
-            else Disabled = true;
+            Disabled = false;
 
             // TO DO EDITING
+            OnPropertyChanged(nameof(Disabled));
+        }
+        private void ExecuteSave(object parameter)
+        {
+            // TO DO SAVE CHANGES TO DATABASE
+        }
+        private void ExecuteCancel(object parameter)
+        {
+            // TO DO BRING BACK PREVIOUS VALUES 
+            Disabled = true;
             OnPropertyChanged(nameof(Disabled));
         }
         private void ExecuteDeleteTask(object parameter)
@@ -58,8 +68,9 @@ namespace ToDoApp.ViewModel
                 {
                     OnViewChangeViewRequested();
                 }
+               
                 else MessageBox.Show("Wystapil blad przy usuwaniu zadania!");*/
-
+                
 
             }
         }

@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoApp.View"
-        mc:Ignorable="d"
-        Height="450" Width="800">
+        mc:Ignorable="d">
     <Grid>
         <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
             <Grid.RowDefinitions>
@@ -37,8 +36,11 @@
 
                 </Grid.ColumnDefinitions>
                 <Button Content="Cofnij" Command="{Binding BackCommand}" Style="{StaticResource AppButton}" Grid.Row="4" Grid.Column="0"/>
-                <Button Content="Usuń" Command="{Binding DeleteCommand}" Style="{StaticResource AppButton}" Grid.Row="4" Grid.Column="1" />
-                <Button Content="Edytuj" Command="{Binding EditCommand}" Style="{StaticResource AppButton}" Grid.Row="4" Grid.Column="2"/>
+                <Button Content="Usuń" Command="{Binding DeleteCommand}" Style="{StaticResource TrueButtonVisible}" Grid.Row="4" Grid.Column="1" />
+                <Button Content="Anuluj" Command="{Binding SaveCommand}" Style="{StaticResource FalseButtonVisible}" Grid.Row="4" Grid.Column="1" />
+
+                <Button Content="Edytuj" Command="{Binding EditCommand}" Style="{StaticResource TrueButtonVisible}" Grid.Row="4" Grid.Column="2"/>
+                <Button Content="Zapisz" Command="{Binding EditCommand}" Style="{StaticResource FalseButtonVisible}" Grid.Row="4" Grid.Column="2"/>
             </Grid>
         </Grid>
     </Grid>

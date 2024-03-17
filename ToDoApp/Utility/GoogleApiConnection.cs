@@ -66,6 +66,33 @@ namespace ToDoApp.Utility
           
             return events;
         }
+        public bool UpdateEvent(Event task)
+        {
+            try
+            {
+                service.Events.Update(task, "primary", task.Id).Execute();
+            }
+            catch (Exception ex) 
+            {
+
+                Trace.WriteLine(ex, "Błąd przy aktualizowaniu zdarzenia. (GoogleApiConnection)");
+                return false;            
+            }
+            return true;
+        }
+        public bool DeleteEvent(Event task)
+        {
+            try 
+            {
+                service.Events.Delete("primary", task.Id);
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex, "Błąd podczas usuwania zdarzenia. (GoogleApiConnection)");
+                return false;
+            }
+            return true;
+        }
         public void PostTask(ToDoTask task)
         {
             Event body = new Event();
