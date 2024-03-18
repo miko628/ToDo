@@ -43,7 +43,13 @@ namespace ToDoApp.Model
             }
             return events;
         }
+        public bool DeleteEvent(Event task)
+        {
+                GoogleApiConnection apiConnection = new GoogleApiConnection();
+                return apiConnection.DeleteEvent(task);
 
+            
+        }
         public bool SynchronizeTasks()
         {
             try

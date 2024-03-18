@@ -85,6 +85,40 @@ namespace ToDoApp
             return new_tasks;
 
         }
+        public static ToDoTask GetTask(string id)
+        {
+            string query = "select * from Task where id=@id";
+
+            DbConnection conn = DbConnection.Instance();
+            ToDoTask task;
+            if (conn.IsConnect())
+            {
+                try
+                {
+                    var Command = new MySqlCommand(query, conn.Connection);
+                    Command.Parameters.AddWithValue("@id", id);
+                    using (MySqlDataReader reader = Command.ExecuteReader())
+                    {
+                        reader.Read();
+                        task = new ToDoTask(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString(), reader[0].ToString());
+
+
+
+
+                        reader.Close();
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(e.ToString());
+                    return null;
+                }
+                return task;
+
+            }
+            else return null;
+        }
 
         public static List<ToDoTask> getHistoryTasks()
         {
@@ -148,6 +182,26 @@ namespace ToDoApp
                 
             conn.Close();
         }
+        public static void UpdateTask(ToDoTask task,string name, string description,DateTime do_date,bool done)
+        {
+            DbConnection conn = DbConnection.Instance();
+
+            if (conn.IsConnect())
+            {
+                var Command = conn.Connection.CreateCommand();
+                Command.CommandText = "update Task set name=@name, description=@description, do_date=@do_date,done=@done where id=@id";
+                Command.Parameters.AddWithValue("@id", task.Id);
+                Command.Parameters.AddWithValue ("name", name);
+                Command.Parameters.AddWithValue("description", description);
+                Command.Parameters.AddWithValue("do_date", do_date);
+                Command.Parameters.AddWithValue("done", done);
+
+                Command.ExecuteNonQuery();
+            }
+
+            conn.Close();
+        }
+       
         public static void DoneTask(ToDoTask task) 
         {
             DbConnection conn = DbConnection.Instance();

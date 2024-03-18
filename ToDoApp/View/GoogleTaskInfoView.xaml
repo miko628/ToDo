@@ -21,13 +21,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Nazwa:" Grid.Row="0" Style="{StaticResource DefaultTextBlock}"/>
-            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding NameField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource DefaultTextBox}"/>
+            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding NameField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource HideTextBox}"/>
             <TextBlock Text="Opis:" Grid.Row="1"  Style="{StaticResource DefaultTextBlock}"/>
-            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding DescriptionField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource DefaultTextBox}"/>
+            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding DescriptionField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource HideTextBox}"/>
             <TextBlock Text="Data i godzina:" Grid.Row="2"  Style="{StaticResource DefaultTextBlock}"/>
-            <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding DateField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource DefaultTextBox}"/>
+            <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding DateField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource HideTextBox}"/>
             <TextBlock Text="Wykonano" Grid.Row="3"  Style="{StaticResource DefaultTextBlock}"/>
-            <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding DoneField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource DefaultTextBox}"/>
+            <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding DoneField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource HideTextBox}"/>
             <Grid Grid.Row="4" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

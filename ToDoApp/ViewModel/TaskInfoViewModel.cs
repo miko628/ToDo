@@ -14,11 +14,12 @@ namespace ToDoApp.ViewModel
     internal class TaskInfoViewModel: ViewModelBase
     {
         private TaskInfoModel taskInfoModel;
+
         public event EventHandler ChangeViewRequest;
         public string NameField { get; set; }
         public string DescriptionField { get; set; }
         //public string DateField { get; set; }
-        public string DoneField { get; set; }
+        public bool DoneField { get; set; }
         public bool Disabled { get; set; }
         private ToDoTask _task;
         public DateTime DatePick { get; set; }
@@ -40,11 +41,7 @@ namespace ToDoApp.ViewModel
             DescriptionField = task.Description;
             TodayDate = DateTime.Now;
             DatePick = task.TaskToDoDate;
-            if (task.Done == true)
-            {
-                DoneField = "Tak";
-            }
-            else DoneField = "Nie";
+            DoneField = task.Done; // 
             OnPropertyChanged(nameof(NameField));
             OnPropertyChanged(nameof(DescriptionField));
 
@@ -73,20 +70,39 @@ namespace ToDoApp.ViewModel
             Disabled = false;
             OnPropertyChanged(nameof(Disabled));
         }
+        private void ReloadTask()
+        {
+            var gettask = taskInfoModel.GetTask(_task.Id);
+            if(gettask is not null)
+            {
+                _task = gettask ;
+                NameField = _task.Name;
+                DescriptionField = _task.Description;
+                DatePick = _task.TaskToDoDate;
+                DoneField = _task.Done;
+            }
+
+            CancelCommand.Execute(this);
+        }
         private void ExecuteSave(object parameter)
         {
-            // TO DO SAVE CHANGES TO DATABASE
+            Trace.WriteLine(DoneField.ToString());
+            DateTime now = DateTime.Now;
+            if (!string.IsNullOrEmpty(NameField) && DatePick >= now)
+            {
+                taskInfoModel.UpdateTask(_task, NameField, DescriptionField, DatePick, DoneField);
+            }
+            else MessageBox.Show("Wystąpił błąd przy zapisywaniu!");
+            ReloadTask();            
         }
         private void ExecuteCancel(object parameter)
         {
-            // TO DO BRING BACK PREVIOUS VALUES 
             Disabled = true;
             DefaultValues(_task);
             OnPropertyChanged(nameof(Disabled));
         }
         private void ExecuteDeleteTask(object parameter)
         {
-            //var task = (ToDoTask) parameter;
             var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Caption", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {

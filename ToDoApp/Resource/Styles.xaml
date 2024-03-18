@@ -63,6 +63,31 @@
         </Style.Resources>
     </Style>
 
+    <Style x:Key="HideComboBox" TargetType="ComboBox">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}"/>
+        <Setter Property="FontSize" Value="32"/>
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="15"/>
+            </Style>
+        </Style.Resources>
+        <Style.Triggers>
+            <Trigger Property="IsReadOnly" Value="True">
+                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}"/>
+                <Setter Property="IsEnabled" Value="False"/>
+
+
+            </Trigger>
+            <Trigger Property="IsReadOnly" Value="False">
+                <Setter Property="BorderThickness" Value="5"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}"/>
+                <Setter Property="IsEnabled" Value="True"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
     <Style x:Key="DefaultListView" TargetType="ListView" BasedOn="{StaticResource {x:Type ListView}}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="ItemContainerStyle">
@@ -85,18 +110,19 @@
     
     <Style x:Key="HideTextBox" TargetType="TextBox">
         <Setter Property="FontSize" Value="25"/>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+
         <Style.Resources>
          
         </Style.Resources>
         <Style.Triggers>
             <Trigger Property="IsReadOnly" Value="True">
-                <Setter Property="Background" Value="White" />
-                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}"/>
+
             </Trigger>
             <Trigger Property="IsReadOnly" Value="False">
-                <Setter Property="Background" Value="White" />
-                <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="BorderThickness" Value="5"/>
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}"/>
 
             </Trigger>
@@ -104,18 +130,18 @@
     </Style>
     <Style x:Key="HideDateTimePicker" TargetType="{x:Type mah:DateTimePicker}">
         <Setter Property="FontSize" Value="25"/>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+
         <Style.Resources>
 
         </Style.Resources>
         <Style.Triggers>
             <Trigger Property="IsReadOnly" Value="True">
-                <Setter Property="Background" Value="White" />
-                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}"/>
             </Trigger>
             <Trigger Property="IsReadOnly" Value="False">
-                <Setter Property="Background" Value="White" />
-                <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="BorderThickness" Value="5"/>
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}"/>
 
             </Trigger>

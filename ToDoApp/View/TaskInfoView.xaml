@@ -28,7 +28,10 @@
         <TextBlock Text="Data i godzina:" Grid.Row="2"  Style="{StaticResource DefaultTextBlock}"/>
         <mah:DateTimePicker Grid.Row="2" Grid.Column="2" IsReadOnly="{Binding Disabled}" Style="{StaticResource HideDateTimePicker}" SelectedDateTime="{Binding DatePick}"  DisplayDateStart="{Binding TodayDate}" FirstDayOfWeek="Monday" Culture="pl-PL" />
         <TextBlock Text="Wykonano" Grid.Row="3"  Style="{StaticResource DefaultTextBlock}"/>
-        <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding DoneField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource HideTextBox}"/>
+        <ComboBox Grid.Row="3" Grid.Column="2" SelectedIndex="{Binding DoneField, Mode=TwoWay}" IsReadOnly="{Binding Disabled}"  Style="{StaticResource HideComboBox}">
+            <ComboBoxItem>Tak</ComboBoxItem>
+            <ComboBoxItem>Nie</ComboBoxItem>
+        </ComboBox>
         <Grid Grid.Row="4" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

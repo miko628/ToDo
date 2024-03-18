@@ -10,8 +10,16 @@ namespace ToDoApp.Model
 {
     class TaskInfoModel
     {
-        public bool UpdateTask(ToDoTask task,string name,string description,DateTime toDoDate)
+        public bool UpdateTask(ToDoTask task,string name,string description,DateTime toDoDate,bool done)
         {
+            try
+            {
+                DbCrud.UpdateTask(task,name,description,toDoDate,done);
+            }
+            catch(Exception ex) 
+            {
+            
+            }
             return true;
         }
         public bool DeleteTask(ToDoTask task)
@@ -30,5 +38,21 @@ namespace ToDoApp.Model
             return true;
         }
         
+        public ToDoTask GetTask(string id)
+        {
+            ToDoTask task;
+            try
+            {
+                task=DbCrud.GetTask(id);
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex, "blad przy usuwaniu zadania.(TaskInfoModel)");
+                return null;
+            }
+            SoundNotification.PlayNotificationSound();
+
+            return task;
+        }
     }
 }

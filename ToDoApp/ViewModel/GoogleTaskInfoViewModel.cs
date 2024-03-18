@@ -12,7 +12,7 @@ namespace ToDoApp.ViewModel
 {
     class GoogleTaskInfoViewModel:ViewModelBase
     {
-        private GoogleTaskInfoModel taskInfoModel;
+        private GoogleTaskInfoModel googleTaskInfoModel;
         public event EventHandler ChangeViewRequest;
         public string NameField { get; set; }
         public string DescriptionField { get; set; }
@@ -29,7 +29,7 @@ namespace ToDoApp.ViewModel
 
         public GoogleTaskInfoViewModel(Event task)
         {
-            taskInfoModel = new GoogleTaskInfoModel();
+            googleTaskInfoModel = new GoogleTaskInfoModel();
             Disabled = true;
             _task = task;
             NameField = task.Summary;
@@ -70,7 +70,12 @@ namespace ToDoApp.ViewModel
                 }
                
                 else MessageBox.Show("Wystapil blad przy usuwaniu zadania!");*/
-                
+                if (googleTaskInfoModel.DeleteEvent(_task))
+                {
+                    OnViewChangeViewRequested();
+                    MessageBox.Show("Pomyślnie usunięto zadanie z kalendarza Google.");
+                }
+                else MessageBox.Show("Wystąpił błąd przy usuwaniu zadania z kalendarza Google.");
 
             }
         }

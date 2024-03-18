@@ -59,13 +59,19 @@ namespace ToDoApp.ViewModel
         }
         private void ExecuteDeleteTask(object parameter)
         {
-          /*  var task = parameter as ToDoTask;
-            if (taskModel.DeleteTask(task))
+            var task = parameter as Event;
+            var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Caption", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
             {
+                if (calendarModel.DeleteEvent(task))
+                {
+                    MessageBox.Show("Pomyślnie usunięto zadanie z kalendarza Google.");
+                }
+                else MessageBox.Show("Wystąpił błąd przy usuwaniu zadania z kalendarza Google.");
                 LoadTasks();
             }
-            else MessageBox.Show("Nie udalo sie usunac zadania!");*/
-          //to do
+                
+
         }
 
         private void LoadTasks()

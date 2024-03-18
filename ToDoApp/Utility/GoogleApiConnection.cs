@@ -84,7 +84,7 @@ namespace ToDoApp.Utility
         {
             try 
             {
-                service.Events.Delete("primary", task.Id);
+                service.Events.Delete("primary", task.Id).Execute();
             }
             catch (Exception ex)
             {
