@@ -22,5 +22,9 @@ namespace ToDoApp.View
             InitializeComponent();
             this.DataContext = new MainViewModel();
         }
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

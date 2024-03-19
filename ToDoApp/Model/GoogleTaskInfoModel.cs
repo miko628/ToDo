@@ -15,10 +15,16 @@ namespace ToDoApp.Model
             GoogleApiConnection apiConnection = new GoogleApiConnection();
             return apiConnection.DeleteEvent(task);
         }
-        public bool UpdateEvent(Event task)
+        public bool UpdateEvent(Event task,string name,string description,DateTime date)
+        {
+            //task.Summary
+            GoogleApiConnection apiConnection = new GoogleApiConnection();
+            return apiConnection.UpdateEvent(task,name,description,date);
+        }
+        public Event? GetEvent(string id)
         {
             GoogleApiConnection apiConnection = new GoogleApiConnection();
-            return apiConnection.UpdateEvent(task);
+            return apiConnection.GetEvent(id);
         }
     }
 }

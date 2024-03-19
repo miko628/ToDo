@@ -17,12 +17,14 @@ namespace ToDoApp.ViewModel
     class CalendarViewModel : ViewModelBase
     {
         private CalendarModel calendarModel;
-        private Event _selectedTask;
+        private Event? _selectedTask;
         public ObservableCollection<Event> CurrentTasks { get; set; }
 
         public RelayCommand SynchronizeCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
-        public event EventHandler ChangeViewRequest;
+        public RelayCommand Checked { get; set; }
+
+        public event EventHandler? ChangeViewRequest;
 
         private void OnViewChangeViewRequested()
         {
@@ -55,7 +57,13 @@ namespace ToDoApp.ViewModel
             LoadTasks();
             SynchronizeCommand = new RelayCommand(ExecuteSyncTasks, CanExecuteMyCommand);
             DeleteCommand = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
+            Checked = new RelayCommand(ExecuteDoneTask, CanExecuteMyCommand);
+
             //api.PostTask(new ToDoTask("nazwa", DateTime.Now.ToString(), DateTime.Now.ToString(), "","",null));
+        }
+        private void ExecuteDoneTask(object parameter)
+        {
+            // TO DO EXECUTE DONE TASK GOOGLE APi
         }
         private void ExecuteDeleteTask(object parameter)
         {

@@ -43,6 +43,19 @@ namespace ToDoApp.Utility
             });
 
         }
+        public Event? GetEvent(string id)
+        {
+            Event _event=null;
+            try
+            {
+                _event=service.Events.Get("primary",id).Execute();
+            }
+            catch (Exception ex) 
+            {
+                return null;
+            }
+            return _event;
+        }
         public Events GetAllTasks()
         {
             EventsResource.ListRequest request = service.Events.List("primary");
@@ -66,10 +79,19 @@ namespace ToDoApp.Utility
           
             return events;
         }
-        public bool UpdateEvent(Event task)
+        public bool UpdateEvent(Event task,string name,string description,DateTime date)
         {
             try
             {
+                task.Summary = name;
+                task.Description = description;
+                //task.
+                EventDateTime start = new EventDateTime();
+
+                start.DateTime = date;
+                //var end = start;
+                task.Start = start;
+                task.End = start;
                 service.Events.Update(task, "primary", task.Id).Execute();
             }
             catch (Exception ex) 

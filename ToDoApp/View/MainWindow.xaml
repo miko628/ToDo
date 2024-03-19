@@ -7,9 +7,9 @@
         xmlns:viewModel="clr-namespace:ToDoApp.ViewModel"
         mc:Ignorable="d"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="To Do Application" Height="450" Width="800">
-
-    <Grid >
+        Title="To Do Application" Height="450" Width="800" Closing="MetroWindow_Closing">
+  
+        <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />

@@ -35,7 +35,7 @@ namespace ToDoApp.ViewModel
         {
             ChangeViewRequest?.Invoke(this, EventArgs.Empty);
         }
-        public void DefaultValues(ToDoTask task)
+        private void DefaultValues(ToDoTask task)
         {
             NameField = task.Name;
             DescriptionField = task.Description;

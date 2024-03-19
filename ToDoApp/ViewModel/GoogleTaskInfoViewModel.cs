@@ -1,10 +1,12 @@
 ﻿using Google.Apis.Calendar.v3.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using ToDoApp.Model;
 using ToDoApp.Utility;
 
@@ -13,13 +15,15 @@ namespace ToDoApp.ViewModel
     class GoogleTaskInfoViewModel:ViewModelBase
     {
         private GoogleTaskInfoModel googleTaskInfoModel;
+        private Event _task;
+
         public event EventHandler ChangeViewRequest;
         public string NameField { get; set; }
         public string DescriptionField { get; set; }
-        public string DateField { get; set; }
-        public string DoneField { get; set; }
+        public DateTime DateField { get; set; }
+       // public string DoneField { get; set; }
         public bool Disabled { get; set; }
-        private Event _task;
+        public DateTime TodayDate { get; set; }
 
         public RelayCommand BackCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
@@ -34,7 +38,9 @@ namespace ToDoApp.ViewModel
             _task = task;
             NameField = task.Summary;
             DescriptionField = task.Description;
-            DateField = task.Start.DateTime.ToString();
+            DateField = (DateTime) task.Start.DateTime;
+         //   DoneField = task;
+            TodayDate = DateTime.Now;
             BackCommand = new RelayCommand((e) => { OnViewChangeViewRequested(); }, CanExecuteMyCommand);
             DeleteCommand = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
             EditCommand = new RelayCommand(ExecuteEditTask, CanExecuteMyCommand);
@@ -44,18 +50,52 @@ namespace ToDoApp.ViewModel
         private void ExecuteEditTask(object parameter)
         {
             Disabled = false;
-
-            // TO DO EDITING
             OnPropertyChanged(nameof(Disabled));
         }
         private void ExecuteSave(object parameter)
         {
-            // TO DO SAVE CHANGES TO DATABASE
+           // Trace.WriteLine(DoneField.ToString());
+            DateTime now = DateTime.Now;
+            if (!string.IsNullOrEmpty(NameField) && DateField >= now)
+            {
+                googleTaskInfoModel.UpdateEvent(_task, NameField, DescriptionField, DateField);
+            }
+            else MessageBox.Show("Wystąpił błąd przy zapisywaniu!");
+            ReloadTask();
+        }
+        private void DefaultValues(Event task)
+        {
+            NameField = task.Summary;
+            DescriptionField = task.Description;
+            DateField = (DateTime)task.Start.DateTime;
+            OnPropertyChanged(nameof(NameField));
+            OnPropertyChanged(nameof(DescriptionField));
+
+            OnPropertyChanged(nameof(DateField));
+
+           // OnPropertyChanged(nameof(DoneField));
+
+        }
+
+        private void ReloadTask()
+        {
+            var gettask = googleTaskInfoModel.GetEvent(_task.Id);
+            if (gettask is not null)
+            {
+                _task = gettask;
+                NameField = gettask.Summary;
+                DescriptionField = gettask.Description;
+                DateField = (DateTime)gettask.Start.DateTime;
+               // DoneField = _task.Done;
+            }
+
+            CancelCommand.Execute(this);
         }
         private void ExecuteCancel(object parameter)
         {
             // TO DO BRING BACK PREVIOUS VALUES 
             Disabled = true;
+            DefaultValues(_task);
             OnPropertyChanged(nameof(Disabled));
         }
         private void ExecuteDeleteTask(object parameter)
