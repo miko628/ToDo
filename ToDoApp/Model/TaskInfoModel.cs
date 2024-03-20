@@ -18,7 +18,7 @@ namespace ToDoApp.Model
             }
             catch(Exception ex) 
             {
-            
+                Trace.WriteLine(ex,"Wystąpił błąd przy aktualizowaniu zadania! (TaskInfoModel)");
             }
             return true;
         }
@@ -30,7 +30,7 @@ namespace ToDoApp.Model
             }
             catch(Exception ex) 
             {
-            Trace.WriteLine(ex,"blad przy usuwaniu zadania.(TaskInfoModel)");
+            Trace.WriteLine(ex, "Wystąpił błąd przy usuwaniu zadania! (TaskInfoModel)");
                 return false;
             }
             SoundNotification.PlayNotificationSound();
@@ -47,7 +47,7 @@ namespace ToDoApp.Model
             }
             catch (Exception ex)
             {
-                Trace.WriteLine(ex, "blad przy usuwaniu zadania.(TaskInfoModel)");
+                Trace.WriteLine(ex, "Wystąpił błąd przy usuwaniu zadania.(TaskInfoModel)");
                 return null;
             }
             SoundNotification.PlayNotificationSound();

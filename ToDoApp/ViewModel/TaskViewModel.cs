@@ -18,6 +18,7 @@ namespace ToDoApp.ViewModel
 {
     class TaskViewModel: ViewModelBase
     {
+        public ObservableCollection<ToDoTask> Tasks { get; set; } 
         private TaskCreatorView? taskCreator;
         private ToDoTask _selectedTask;
         private readonly TaskModel taskModel;
@@ -53,6 +54,7 @@ namespace ToDoApp.ViewModel
             taskCreator = new TaskCreatorView();
             taskModel = new TaskModel();   
             CurrentTasks = new ObservableCollection<ToDoTask>();
+            Tasks = new ObservableCollection<ToDoTask>();
             AddTask = new RelayCommand(ExecuteAddTask, CanExecuteMyCommand);
             DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
             Checked = new RelayCommand(ExecuteDoneTask, CanExecuteMyCommand);
@@ -77,7 +79,10 @@ namespace ToDoApp.ViewModel
             taskModel.DoneTask(task);
             LoadTasks();
         }
-
+        private async void AddTaskEvent()
+        {
+            // TO DO EVENTS POPPUP TASK IN DEFINED TIME
+        }
         private void ExecuteAddTask(object parameter)
         {
 

@@ -85,7 +85,7 @@ namespace ToDoApp
             return new_tasks;
 
         }
-        public static ToDoTask GetTask(string id)
+        public static ToDoTask? GetTask(string id)
         {
             string query = "select * from Task where id=@id";
 
@@ -101,9 +101,6 @@ namespace ToDoApp
                     {
                         reader.Read();
                         task = new ToDoTask(reader[1].ToString(), reader[4].ToString(), reader[3].ToString(), reader[2].ToString(), reader[5].ToString(), reader[0].ToString());
-
-
-
 
                         reader.Close();
 

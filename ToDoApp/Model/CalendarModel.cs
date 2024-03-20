@@ -24,6 +24,10 @@ namespace ToDoApp.Model
             {
                 GoogleApiConnection apiConnection = new GoogleApiConnection();
                 events = apiConnection.GetAllTasks();
+                if(events == null)
+                {
+                    return null;
+                }
                 foreach(var item in events.Items)
                 {
                     Trace.WriteLine("name (summary) :"+item.Summary);

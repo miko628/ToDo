@@ -86,10 +86,15 @@ namespace ToDoApp.ViewModel
         {
             CurrentTasks.Clear();
             var events = calendarModel.GetGoogleTaks();
-            foreach (var e in events.Items)
+            if (events is not null)
             {
-                CurrentTasks.Add(e);
+                foreach (var e in events.Items)
+                {
+                    CurrentTasks.Add(e);
+                }
             }
+            else MessageBox.Show("Wystąpił błąd przy próbie wczytania zadań z kalendarza Google.");
+            
         }
         private void ExecuteSyncTasks ( object param)
         {

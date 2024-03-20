@@ -56,9 +56,14 @@ namespace ToDoApp.ViewModel
         {
            // Trace.WriteLine(DoneField.ToString());
             DateTime now = DateTime.Now;
-            if (!string.IsNullOrEmpty(NameField) && DateField >= now)
+            if (!string.IsNullOrEmpty(NameField) )
             {
-                googleTaskInfoModel.UpdateEvent(_task, NameField, DescriptionField, DateField);
+                if (DateField >= now)
+                {
+                    googleTaskInfoModel.UpdateEvent(_task, NameField, DescriptionField, DateField);
+
+                }
+                else MessageBox.Show("Data powinna być w przyszłości!");
             }
             else MessageBox.Show("Wystąpił błąd przy zapisywaniu!");
             ReloadTask();

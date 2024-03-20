@@ -52,11 +52,12 @@ namespace ToDoApp.Utility
             }
             catch (Exception ex) 
             {
+                Trace.WriteLine(ex, "Wystąpił błąd przy pobieraniu zadania! (GoogleApiConnection)");
                 return null;
             }
             return _event;
         }
-        public Events GetAllTasks()
+        public Events? GetAllTasks()
         {
             EventsResource.ListRequest request = service.Events.List("primary");
             request.TimeMin = DateTime.Now;
@@ -64,20 +65,28 @@ namespace ToDoApp.Utility
             request.SingleEvents = true;
             request.MaxResults = 10;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-            //List<Event> events=new List<Event>();
-            // List events.
-            Events events = request.Execute();
-            if (events.Items == null || events.Items.Count == 0)
+
+            try
             {
-                Trace.WriteLine("No upcoming events found.");
-                foreach(var x in events.Items)
+                Events events = request.Execute();
+                if (events.Items == null || events.Items.Count == 0)
                 {
-                    Trace.WriteLine(x);
+                    Trace.WriteLine("No upcoming events found.");
+                   ;
+                }else
+                {
+                    foreach (var x in events.Items)
+                    {
+                        Trace.WriteLine(x.Summary);
+                    }
+                    return events;
                 }
-                return events;
+            }catch (Exception ex)
+            {
+                Trace.WriteLine(ex, "Wystąpił błąd przy pobieraniu zadań! (GoogleApiConnection)");
             }
           
-            return events;
+            return null;
         }
         public bool UpdateEvent(Event task,string name,string description,DateTime date)
         {
@@ -89,7 +98,6 @@ namespace ToDoApp.Utility
                 EventDateTime start = new EventDateTime();
 
                 start.DateTime = date;
-                //var end = start;
                 task.Start = start;
                 task.End = start;
                 service.Events.Update(task, "primary", task.Id).Execute();
@@ -97,7 +105,7 @@ namespace ToDoApp.Utility
             catch (Exception ex) 
             {
 
-                Trace.WriteLine(ex, "Błąd przy aktualizowaniu zdarzenia. (GoogleApiConnection)");
+                Trace.WriteLine(ex, "Wysyąpił błąd przy aktualizowaniu zdarzenia! (GoogleApiConnection)");
                 return false;            
             }
             return true;
@@ -110,7 +118,7 @@ namespace ToDoApp.Utility
             }
             catch (Exception ex)
             {
-                Trace.WriteLine(ex, "Błąd podczas usuwania zdarzenia. (GoogleApiConnection)");
+                Trace.WriteLine(ex, "Wysyąpił błąd podczas usuwania zdarzenia! (GoogleApiConnection)");
                 return false;
             }
             return true;
@@ -126,8 +134,15 @@ namespace ToDoApp.Utility
             body.Start = start;
             body.End = start;
             EventsResource.InsertRequest request = new EventsResource.InsertRequest(service, body, "primary");
-            Event response = request.Execute();
+            try
+            {
+                Event response = request.Execute();
 
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex, "Wystąpił błąd podczas wysyłania zdarzenia! (GoogleApiConnection)");
+            }
         }
         public void SyncrhonizeTasks(List<ToDoTask> tasks)
         {

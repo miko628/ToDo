@@ -88,9 +88,14 @@ namespace ToDoApp.ViewModel
         {
             Trace.WriteLine(DoneField.ToString());
             DateTime now = DateTime.Now;
-            if (!string.IsNullOrEmpty(NameField) && DatePick >= now)
+            if (!string.IsNullOrEmpty(NameField))
             {
-                taskInfoModel.UpdateTask(_task, NameField, DescriptionField, DatePick, DoneField);
+                if (DatePick >= now)
+                {
+                    taskInfoModel.UpdateTask(_task, NameField, DescriptionField, DatePick, DoneField);
+
+                }
+                else MessageBox.Show("Data powinna być w przyszłości!");
             }
             else MessageBox.Show("Wystąpił błąd przy zapisywaniu!");
             ReloadTask();            

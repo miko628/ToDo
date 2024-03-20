@@ -25,7 +25,6 @@ namespace ToDoApp.Model
                     Trace.WriteLine(ex,"Problem przy zmianie zadania.(HistoryModel)");
                     return false;
                 }
-                //add exceptions
 
             }
             else return false;
@@ -46,7 +45,6 @@ namespace ToDoApp.Model
                 if (task is not null)
                 {
                     DbCrud.DeleteTask(task);
-                    //LoadTasks(new object());
                 }
                 else
                 {

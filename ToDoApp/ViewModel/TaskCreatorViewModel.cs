@@ -48,16 +48,21 @@ namespace ToDoApp.ViewModel
             //sprawdzenie null name
             DateTime dateToAdd = new DateTime(DatePick.Year, DatePick.Month, DatePick.Day, TimePick.Hour, TimePick.Minute, TimePick.Second);
             DateTime now = DateTime.Now;
-            if (!string.IsNullOrEmpty(NameField) && dateToAdd >= now)
+            if (!string.IsNullOrEmpty(NameField) )
             {
                 Trace.WriteLine(dateToAdd.ToString()+ "\n" + now.ToString());
-
-                if (creatorModel.SaveTask(NameField, dateToAdd, DescriptionField))
+                if( dateToAdd >= now)
                 {
-                    OnRequestClose?.Invoke(this, EventArgs.Empty);
+                    if (creatorModel.SaveTask(NameField, dateToAdd, DescriptionField))
+                    {
+                        OnRequestClose?.Invoke(this, EventArgs.Empty);
 
+                    }
+                    else MessageBox.Show("Błąd przy próbie stworzenia zadania!");
                 }
-                else MessageBox.Show("Błąd przy próbie stworzenia zadania!");
+                else MessageBox.Show("Data powinna być w przyszłości!");
+
+
             }
             else MessageBox.Show("Błąd przy próbie stworzenia zadania!");
            
