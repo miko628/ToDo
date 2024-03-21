@@ -64,10 +64,13 @@ namespace ToDoApp.ViewModel
         
         private void LoadTasks()
         {
-            CurrentTasks.Clear();            
+            TaskEvents tasksEvents = TaskEvents.Instance();
+            CurrentTasks.Clear();
+            tasksEvents.RemoveAllTasks();
             foreach (ToDoTask t in taskModel.GetAllTasks())
             {
                 CurrentTasks.Add(t);
+                tasksEvents.AddTask(t);
             }
         
         }
@@ -81,7 +84,7 @@ namespace ToDoApp.ViewModel
         }
         private async void AddTaskEvent()
         {
-            // TO DO EVENTS POPPUP TASK IN DEFINED TIME
+            Task.Run(() => { TaskEvents tasksEvents = TaskEvents.Instance(); });
         }
         private void ExecuteAddTask(object parameter)
         {
