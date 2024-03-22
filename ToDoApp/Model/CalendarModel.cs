@@ -19,7 +19,7 @@ namespace ToDoApp.Model
         public Events? GetGoogleTaks()
         {
             //List<Event> tasks = new List<ToDoTask>();
-            Events events;
+            Events? events;
             try
             {
                 GoogleApiConnection apiConnection = new GoogleApiConnection();

@@ -8,5 +8,14 @@ namespace ToDoApp.Model
 {
     class MainWindowModel
     {
+        //private 
+        public void AddTimer()
+        {
+
+        }
+        public void RemoveTimer()
+        {
+        
+        }
     }
 }

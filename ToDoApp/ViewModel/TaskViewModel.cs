@@ -60,17 +60,27 @@ namespace ToDoApp.ViewModel
             Checked = new RelayCommand(ExecuteDoneTask, CanExecuteMyCommand);
             //MoreCommand = new RelayCommand((args) => { ChangeViewRequest?.Invoke(this, EventArgs.Empty); }, CanExecuteMyCommand); (Deleted)
             LoadTasks();
+            ReloadEvents();
+
         }
-        
+        private void ReloadEvents()
+        {
+            foreach (ToDoTask task in CurrentTasks)
+            {
+                var timerTask = new TimerTask(task);
+            }
+        }
         private void LoadTasks()
         {
-            TaskEvents tasksEvents = TaskEvents.Instance();
+            //TaskEvents tasksEvents = TaskEvents.Instance();
+            
             CurrentTasks.Clear();
-            tasksEvents.RemoveAllTasks();
+            //tasksEvents.RemoveAllTasks();
             foreach (ToDoTask t in taskModel.GetAllTasks())
             {
                 CurrentTasks.Add(t);
-                tasksEvents.AddTask(t);
+                //var timer = new TimerTask(t);
+                //tasksEvents.AddTask(t);
             }
         
         }

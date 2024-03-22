@@ -15,7 +15,7 @@ namespace ToDoApp.Utility
     public class TaskEvents
     {
         private static ObservableCollection<DispatcherTimer> _events;
-        private static TaskEvents _instance = null;
+        private static TaskEvents? _instance = null;
 
 
         public static TaskEvents Instance()
@@ -54,7 +54,7 @@ namespace ToDoApp.Utility
             _events.Clear();
         }
 
-
+        
         public void StartTask(ToDoTask t)
         {
             ToDoTask task = t;
