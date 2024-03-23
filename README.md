@@ -24,4 +24,4 @@ git clone https://github.com/miko628/ToDo.git
 in App.config set up configuration information for connecting with MySql database
 
 ## To use google calendar application you need to create Google Cloud project with Google Calendar Api
-then put credential.json in "Utility" folder
+then put credentials.json in "Utility" folder
