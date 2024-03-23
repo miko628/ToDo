@@ -60,7 +60,7 @@ namespace ToDoApp.ViewModel
             Checked = new RelayCommand(ExecuteDoneTask, CanExecuteMyCommand);
             //MoreCommand = new RelayCommand((args) => { ChangeViewRequest?.Invoke(this, EventArgs.Empty); }, CanExecuteMyCommand); (Deleted)
             LoadTasks();
-            ReloadEvents();
+            //ReloadEvents();
 
         }
         private void ReloadEvents()

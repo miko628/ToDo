@@ -38,13 +38,13 @@ namespace ToDoApp.Utility
         {
             timer.Stop();
         }
-        public void StopbyId(string id)
+     /*   public void StopbyId(string id)
         {
             if(id==task.Id)
             {
                 timer.Stop();
             }
-        }
+        }*/
 
         private void Timer_Tick(object sender, EventArgs e)
         {
