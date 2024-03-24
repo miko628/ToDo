@@ -6,6 +6,7 @@ a simple WPF application that allows you to make a to do list and synchronise it
 - WPF
 - MVVM pattern
 - MySql
+- Google Calendar Api
 
 ## NuGet Packages
 - Google.Apis.Calendar.v3
