@@ -9,16 +9,28 @@ namespace ToDoApp.Utility
 {
     internal class TimerManager
     {
-        private List<TimerTask> _timers = new List<TimerTask>();
+        private List<TimerTask> _timers;
 
         public TimerManager()
         {
-            
+            _timers=new List<TimerTask>();
         }
 
         public void AddTimer(ToDoTask task)
         {
             _timers.Add(new TimerTask(task));
+        }
+        public void DeleteTimer(string id)
+        {
+            foreach (var timer in _timers)
+            {
+                if (timer.GetId().Equals(id)) 
+                {
+                    timer.Stop();
+                    _timers.Remove(timer);
+                    break;
+                }
+            }
         }
         public void StopAllTimers()
         {
@@ -26,6 +38,7 @@ namespace ToDoApp.Utility
             {
                 timer.Stop();
             }
+            _timers.Clear();
         }
     }
 }

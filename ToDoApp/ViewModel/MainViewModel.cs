@@ -19,7 +19,7 @@ namespace ToDoApp.ViewModel
     {
         private object _currentView;
         private string _currentTime;
-
+        private TimerManager timerManager;
         public RelayCommand PlaySound { get; set; }
         
 
@@ -46,8 +46,7 @@ namespace ToDoApp.ViewModel
 
         public MainViewModel()
         {
-            CurrentView = new TaskViewModel();
-            GoToTasks(this);
+            //CurrentView = new TaskViewModel();
 
             PlaySound = new RelayCommand(ExecutePlaySound, CanExecuteMyCommand);
             HistoryCommand = new RelayCommand(GoToHistory, CanExecuteMyCommand);
@@ -69,8 +68,19 @@ namespace ToDoApp.ViewModel
             ToDoApp.Utility.Timer timer = new ToDoApp.Utility.Timer();
             timer.Tick += Timer_Tick;
             timer.Start();
+            timerManager = new TimerManager();
+
+           // GoToTasks(this);
+            var taskViewModel = new TaskViewModel();
+            taskViewModel.AddTimerTaskRequest += AddTimerTask;
+            taskViewModel.ChangeViewRequest += ChangeViewApp;
+            taskViewModel.RemoveAllTimersRequest += RemoveAllTimerTasks;
+            taskViewModel.RemoveTimerRequest += RemoveTimerTask;
+            taskViewModel.Initialize(); // first time initialize (add tasks from taskviewmodel)
+
+            CurrentView = taskViewModel;
             //ThemeManager.Current.ChangeTheme(this, "Dark.Green");
-           ThemeManager.Current.ChangeTheme(App.Current, "Light.Blue", false);
+            ThemeManager.Current.ChangeTheme(App.Current, "Light.Blue", false);
             //Application.Current.Resources.MergedDictionaries[0].Source =
             //new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml");
             // should be changed
@@ -85,26 +95,32 @@ namespace ToDoApp.ViewModel
         private void GoToTasks(object obj) 
         {
             var taskViewModel = new TaskViewModel();
+            taskViewModel.AddTimerTaskRequest += AddTimerTask;
             taskViewModel.ChangeViewRequest += ChangeViewApp;
+            taskViewModel.RemoveAllTimersRequest += RemoveAllTimerTasks;
+            taskViewModel.RemoveTimerRequest += RemoveTimerTask;
+            
             CurrentView = taskViewModel;
-            Trace.WriteLine(CurrentView.GetType());
                 }
         private void GoToCalendar(object obj)
         {
             var calendarViewModel = new CalendarViewModel();
             calendarViewModel.ChangeViewRequest+=ChangeViewAPI;
             CurrentView = calendarViewModel;
-            Trace.WriteLine(CurrentView.GetType());
 
         }
 
         private void ChangeViewApp(object sender,EventArgs e)
         {
+            Trace.WriteLine("otrzymalem changeviewapi !!!");
+
             if (CurrentView.GetType() == typeof(TaskInfoViewModel)) // changeview event from taskinfo
             {
-                var taskViewModel = new TaskViewModel();
-                taskViewModel.ChangeViewRequest += ChangeViewApp;
-                CurrentView = taskViewModel;
+              //  var taskViewModel = new TaskViewModel();
+              //  taskViewModel.ChangeViewRequest += ChangeViewApp;
+                
+               // CurrentView = taskViewModel;
+               GoToTasks(CurrentView);
             }
             else if (CurrentView.GetType()==typeof(TaskViewModel)) // changeview event from task
             {
@@ -116,9 +132,25 @@ namespace ToDoApp.ViewModel
             }
 
         }
+        private void AddTimerTask(object sender, TaskEventArgs e)
+        {
+            Trace.WriteLine("dodaj timer do mainviewmodel");
+            timerManager.AddTimer(e.Task);
+        }
+        private void RemoveAllTimerTasks(object sender, EventArgs e)
+        {
+            Trace.WriteLine("usuwamy do mainviewmodel");
+
+            timerManager.StopAllTimers();
+        }
+        private void RemoveTimerTask(object sender, StringEventArgs e)
+        {
+            Trace.WriteLine("usun timer do mainviewmodel");
+
+            timerManager.DeleteTimer(e.Text);
+        }
         private void ChangeViewAPI(object sender,EventArgs e)
         {
-            Trace.WriteLine("otrzymalem changeviewapi !!!");
 
             if (CurrentView.GetType() == typeof(CalendarViewModel)) //change view event from calendar
             {

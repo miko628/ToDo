@@ -23,8 +23,32 @@ namespace ToDoApp.ViewModel
         private ToDoTask _selectedTask;
         private readonly TaskModel taskModel;
         public event EventHandler ChangeViewRequest;
+        public event EventHandler<TaskEventArgs> AddTimerTaskRequest;
+        public event EventHandler<StringEventArgs> RemoveTimerRequest;
+        public event EventHandler RemoveAllTimersRequest;
+
+
+        private void OnRemoveAllTimersRequest()
+        {
+            Trace.WriteLine("usuwamyall");
+            RemoveAllTimersRequest?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void OnRemoveTimerRequest(string id)
+        {
+            Trace.WriteLine("usuwamy");
+            RemoveTimerRequest?.Invoke(this, new StringEventArgs(id));
+        }
+
+        private void OnAddTimerTaskRequest(ToDoTask task)
+        {
+            Trace.WriteLine("dodajemy");
+            AddTimerTaskRequest?.Invoke(this, new TaskEventArgs(task));
+        }
         private void OnViewChangeViewRequested()
         {
+            Trace.WriteLine("zmieniamy");
+
             ChangeViewRequest?.Invoke(this, EventArgs.Empty);
         }
 
@@ -59,18 +83,31 @@ namespace ToDoApp.ViewModel
             DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
             Checked = new RelayCommand(ExecuteDoneTask, CanExecuteMyCommand);
             //MoreCommand = new RelayCommand((args) => { ChangeViewRequest?.Invoke(this, EventArgs.Empty); }, CanExecuteMyCommand); (Deleted)
-            LoadTasks();
-            //ReloadEvents();
+            RemoveAllTimersRequest?.Invoke(this, EventArgs.Empty);
 
+           // OnRemoveAllTimersRequest();
+            LoadTasks();
+           // ReloadEvents();
+
+
+        }
+        public void Initialize()
+        {
+            // Wywołanie metody, która może spowodować zdarzenie
+            ReloadEvents();
         }
         private void ReloadEvents()
         {
+            
+            OnRemoveAllTimersRequest();
             foreach (ToDoTask task in CurrentTasks)
             {
-                var timerTask = new TimerTask(task);
+                Trace.WriteLine("powinno sie dodac chollera");
+                OnAddTimerTaskRequest(task);
+               // var timerTask = new TimerTask(task);
             }
         }
-        private void LoadTasks()
+        private async void LoadTasks()
         {
             //TaskEvents tasksEvents = TaskEvents.Instance();
             
@@ -90,20 +127,19 @@ namespace ToDoApp.ViewModel
             //Trace.WriteLine((ToDoTask)parameter);
             var task = parameter as ToDoTask;
             taskModel.DoneTask(task);
+            OnAddTimerTaskRequest(task);
+// add try catch (validation)
             LoadTasks();
         }
-        private async void AddTaskEvent()
-        {
-            Task.Run(() => { TaskEvents tasksEvents = TaskEvents.Instance(); });
-        }
+    
         private void ExecuteAddTask(object parameter)
         {
-
+           // OnAddTimerTaskRequest(new ToDoTask("cosik","","","","",""));
             //otworz okienko dodawania Taska
             /*var task = new ToDoTask("nowe", "", "", "przykladowy opis", "",null);
             DbCrud.InsertTask(task);
             
-
+            
             TaskEvents.StartTask(task);*/
 
             if (taskCreator is null || !taskCreator.IsVisible)
@@ -132,6 +168,7 @@ namespace ToDoApp.ViewModel
             var task = parameter as ToDoTask;
             if (taskModel.DeleteTask(task))
             {
+                OnRemoveTimerRequest(task.Id);
                 LoadTasks();
             }
             else MessageBox.Show("Nie udalo sie usunac zadania!");
