@@ -14,14 +14,13 @@ namespace ToDoApp.ViewModel
 {
     class GoogleTaskInfoViewModel:ViewModelBase
     {
-        private GoogleTaskInfoModel googleTaskInfoModel;
+        private readonly GoogleTaskInfoModel googleTaskInfoModel;
         private Event _task;
 
         public event EventHandler ChangeViewRequest;
         public string NameField { get; set; }
         public string DescriptionField { get; set; }
         public DateTime DateField { get; set; }
-       // public string DoneField { get; set; }
         public bool Disabled { get; set; }
         public DateTime TodayDate { get; set; }
 
@@ -39,7 +38,6 @@ namespace ToDoApp.ViewModel
             NameField = task.Summary;
             DescriptionField = task.Description;
             DateField = (DateTime) task.Start.DateTime;
-         //   DoneField = task;
             TodayDate = DateTime.Now;
             BackCommand = new RelayCommand((e) => { OnViewChangeViewRequested(); }, CanExecuteMyCommand);
             DeleteCommand = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
@@ -54,7 +52,6 @@ namespace ToDoApp.ViewModel
         }
         private void ExecuteSave(object parameter)
         {
-           // Trace.WriteLine(DoneField.ToString());
             DateTime now = DateTime.Now;
             if (!string.IsNullOrEmpty(NameField) )
             {
@@ -78,7 +75,6 @@ namespace ToDoApp.ViewModel
 
             OnPropertyChanged(nameof(DateField));
 
-           // OnPropertyChanged(nameof(DoneField));
 
         }
 
@@ -91,14 +87,12 @@ namespace ToDoApp.ViewModel
                 NameField = gettask.Summary;
                 DescriptionField = gettask.Description;
                 DateField = (DateTime)gettask.Start.DateTime;
-               // DoneField = _task.Done;
             }
 
             CancelCommand.Execute(this);
         }
         private void ExecuteCancel(object parameter)
         {
-            // TO DO BRING BACK PREVIOUS VALUES 
             Disabled = true;
             DefaultValues(_task);
             OnPropertyChanged(nameof(Disabled));
@@ -109,12 +103,6 @@ namespace ToDoApp.ViewModel
             var result = MessageBox.Show("Czy jesteś pewien, że chcesz usunąć to zadanie?", "Caption", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                /*if (taskInfoModel.DeleteTask(_task))
-                {
-                    OnViewChangeViewRequested();
-                }
-               
-                else MessageBox.Show("Wystapil blad przy usuwaniu zadania!");*/
                 if (googleTaskInfoModel.DeleteEvent(_task))
                 {
                     OnViewChangeViewRequested();

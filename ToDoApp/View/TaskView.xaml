@@ -26,11 +26,11 @@
         </Grid.ColumnDefinitions>
 
 
-        <ListView Grid.ColumnSpan="2" Style="{StaticResource DefaultListView}" Width="Auto" HorizontalAlignment="Stretch"  ItemsSource="{Binding CurrentTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
+        <ListView Grid.ColumnSpan="2" Style="{StaticResource TasksListView}" Width="Auto" HorizontalAlignment="Stretch"  ItemsSource="{Binding CurrentTasks}" SelectedItem="{Binding SelectedTask}" d:ItemsSource="{d:SampleData ItemCount=2}">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border Style="{StaticResource AccentBorder}">
+                    <Border >
                         <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" >
                             <CheckBox Background="White" HorizontalAlignment="Left" VerticalContentAlignment="Stretch" IsChecked="{Binding Done}" Command="{Binding DataContext.Checked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }"/>
                             <Label FontSize="32" ToolTip="{Binding Description}" Content="{Binding Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
@@ -39,6 +39,7 @@
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
+           
         </ListView>
         <!--         <Button Grid.Row="2" Grid.Column="0" Command="{Binding DeleteTask}" Content="Delete" FontSize="25"/>
  -->

@@ -12,7 +12,7 @@ namespace ToDoApp.ViewModel
 {
     internal class HistoryViewModel: ViewModelBase
     {
-        private HistoryModel historyModel;
+        private readonly HistoryModel historyModel;
         public ObservableCollection<ToDoTask> HistoryTasks { get; set; }
         public ToDoTask SelectedTask { get; set; }
         public RelayCommand Unchecked { get; set; }
@@ -59,6 +59,7 @@ namespace ToDoApp.ViewModel
                 MessageBox.Show("Pomyslnie usunieto zadanie.");
                 // instead of messagebox use popup
             }else MessageBox.Show("Wystapil problem przy probie usuniecia zadania.");
+            LoadTasks(this);
         }
 
     }

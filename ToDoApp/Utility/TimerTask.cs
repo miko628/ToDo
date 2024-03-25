@@ -10,9 +10,9 @@ namespace ToDoApp.Utility
 {
     public class TimerTask
     {
-        private DispatcherTimer timer;
-        private ToDoTask task;
-        public event EventHandler Tick;
+        private readonly DispatcherTimer timer;
+        private readonly ToDoTask task;
+       // public event EventHandler Tick;
 
         public TimerTask(ToDoTask task)
         {
@@ -56,7 +56,7 @@ namespace ToDoApp.Utility
                 SoundNotification.PlayNotificationSound();
 
                 MessageBox.Show("Zadanie do wykonania! " + task.Name + " " + task.Description +" "+ task.TaskToDoDate);
-
+                task.ShouldBeDone = true;
                 ((DispatcherTimer)sender).Stop();
             }
         }

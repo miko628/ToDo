@@ -61,6 +61,7 @@ namespace ToDoApp.ViewModel
                 {
                     _selectedTask = value;
                     OnPropertyChanged(nameof(SelectedTask));
+                    Trace.WriteLine(_selectedTask.ShouldBeDone);
                     OnViewChangeViewRequested();
                 }
                 

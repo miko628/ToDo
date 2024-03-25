@@ -14,13 +14,15 @@ namespace ToDoApp
         private DateTime taskAddDate;
         private DateTime taskToDoDate;
         private bool done;
-
-        public string Id { get => id; set => id = value; }
+        private bool shouldBeDone;
+        public string? Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Description { get => description; set => description = value; }
         public DateTime TaskAddDate { get => taskAddDate; set => taskAddDate = value; }
         public DateTime TaskToDoDate { get => taskToDoDate; set => taskToDoDate = value; }
         public bool Done { get => done; set => done = value; }
+        public bool ShouldBeDone { get => shouldBeDone; set => shouldBeDone = value; }
+
         public ToDoTask(string name, string taskToDoDate, string taskAddDate, string description,string done, string? id)
         {
             if ( id is not null)
@@ -53,6 +55,13 @@ namespace ToDoApp
                 this.Done = false;
             }
             else this.Done = Convert.ToBoolean(done);
+
+            var now = DateTime.Now;
+            //DateTime test = DateTime(taskToDoDate);
+            if (Convert.ToDateTime(taskToDoDate) <= now)
+            {
+                this.ShouldBeDone = true;
+            }else shouldBeDone = false;
         }
        /* public Task(string name,string description="",bool done = false)
         {

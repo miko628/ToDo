@@ -87,7 +87,6 @@
         </Style.Triggers>
     </Style>
 
-
     <Style x:Key="DefaultListView" TargetType="ListView" BasedOn="{StaticResource {x:Type ListView}}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="ItemContainerStyle">
@@ -102,6 +101,46 @@
                             <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </Style.Resources>
+
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="TasksListView" TargetType="ListView" BasedOn="{StaticResource {x:Type ListView}}">
+        <Setter Property="Background" Value="Transparent"/>
+        
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="1" />
+                    <Setter Property="Padding" Value="5" />
+
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                            <Setter Property="BorderThickness" Value="3"/>
+                        </Style>
+                        
+                    </Style.Resources>
+
+                            <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShouldBeDone}" Value="True">
+                            <Setter Property="BorderThickness" Value="3"/>
+                            <Setter Property="BorderBrush" Value="Red"/>
+                            <!-- 
+                            <Setter Property="Background" >
+    <Setter.Value>
+        <SolidColorBrush Color="Orange" Opacity="0.95"/>
+    </Setter.Value>
+</Setter>
+                            -->
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ShouldBeDone}" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
 
                 </Style>
             </Setter.Value>

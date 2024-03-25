@@ -46,10 +46,6 @@ namespace ToDoApp.Model
 
             return true;
         }
-        public void ShowTaskCreator()
-        {
-
-        }
 
         
     }
