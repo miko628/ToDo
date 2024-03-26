@@ -8,24 +8,19 @@ using ToDoApp.Utility;
 
 namespace ToDoApp.Model
 {
-    class TaskCreatorModel
+    class HistoryInfoModel
     {
-        public bool SaveTask(ToDoTask task)
+        public bool DeleteTask(ToDoTask task)
         {
-           
-            //var task = new ToDoTask(name, toDoDate.ToString(), DateTime.Now.ToString(), description, "", "");
             try
             {
-                DbCrud.InsertTask(task);
-
-
+                DbCrud.DeleteTask(task);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Trace.WriteLine(ex,"Blad przy probie zapisania zadania!(TaskCreatorModel)");
+                Trace.WriteLine(ex, "Wystąpił błąd przy usuwaniu zadania! (HistoryInfoModel)");
                 return false;
             }
-
             SoundNotification.PlayNotificationSound();
 
             return true;

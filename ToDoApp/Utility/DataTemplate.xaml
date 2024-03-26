@@ -24,6 +24,9 @@
     <DataTemplate DataType="{x:Type viewModel:GoogleTaskInfoViewModel}">
         <view:GoogleTaskInfoView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModel:HistoryInfoViewModel}">
+        <view:HistoryInfoView/>
+    </DataTemplate>
 
 
 </ResourceDictionary>

@@ -38,7 +38,7 @@
 
         <TextBlock Text="Podaj godzinę:" Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource DefaultTextBlock}"/>
         <mah:TimePicker Grid.Row="7" Grid.ColumnSpan="2" SelectedDateTime="{Binding TimePick}" Culture="pl-PL"  Margin="5"/>
-        <Button Grid.Row="8" Grid.Column="1" Command="{Binding SaveCommand}" Content="Zapisz" FontSize="25"/>
-        <Button Grid.Row="8" Grid.Column="0" Command="{Binding CancelCommand}" Content="Anuluj" FontSize="25"/>
+        <Button Grid.Row="8" Grid.Column="1" Command="{Binding SaveCommand}" Content="Zapisz" Style="{StaticResource AppButton}"/>
+        <Button Grid.Row="8" Grid.Column="0" Command="{Binding CancelCommand}" Content="Anuluj" Style="{StaticResource AppButton}"/>
     </Grid>
 </mah:MetroWindow>

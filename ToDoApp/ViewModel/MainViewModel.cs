@@ -88,7 +88,12 @@ namespace ToDoApp.ViewModel
         }
 
 
-        private void GoToHistory(object obj) => CurrentView = new HistoryViewModel();
+        private void GoToHistory(object obj)
+        {
+            var historyViewModel = new HistoryViewModel();
+            historyViewModel.ChangeViewRequest += ChangeViewHistory;
+            CurrentView = historyViewModel;
+        }
 
 
         //private void GoToInfo(object obj) =>CurrentView=new TaskInfoViewModel();
@@ -109,12 +114,29 @@ namespace ToDoApp.ViewModel
             CurrentView = calendarViewModel;
 
         }
+        private void ChangeViewHistory(object sender, EventArgs e)
+        {
+            if (CurrentView.GetType() == typeof(HistoryInfoViewModel)) // changeview event from historyinfo to history
+            {
+                //  var taskViewModel = new TaskViewModel();
+                //  taskViewModel.ChangeViewRequest += ChangeViewApp;
+
+                // CurrentView = taskViewModel;
+                GoToHistory(CurrentView);
+            }
+            else if (CurrentView.GetType() == typeof(HistoryViewModel)) // changeview event from history to historyinfo
+            {
+                HistoryViewModel historyViewModel = CurrentView as HistoryViewModel;
+                var historyInfoViewModel = new HistoryInfoViewModel(historyViewModel.SelectedTask);
+                historyInfoViewModel.ChangeViewRequest += ChangeViewHistory;
+                CurrentView = historyInfoViewModel;
+            }
+        }
 
         private void ChangeViewApp(object sender,EventArgs e)
         {
-            Trace.WriteLine("otrzymalem changeviewapi !!!");
 
-            if (CurrentView.GetType() == typeof(TaskInfoViewModel)) // changeview event from taskinfo
+            if (CurrentView.GetType() == typeof(TaskInfoViewModel)) // changeview event from taskinfo to task
             {
               //  var taskViewModel = new TaskViewModel();
               //  taskViewModel.ChangeViewRequest += ChangeViewApp;
@@ -122,11 +144,12 @@ namespace ToDoApp.ViewModel
                // CurrentView = taskViewModel;
                GoToTasks(CurrentView);
             }
-            else if (CurrentView.GetType()==typeof(TaskViewModel)) // changeview event from task
+            else if (CurrentView.GetType()==typeof(TaskViewModel)) // changeview event from task to taskinfo
             {
                 TaskViewModel taskViewModel = CurrentView as TaskViewModel;
                 var taskInfoViewModel = new TaskInfoViewModel(taskViewModel.SelectedTask);
                 taskInfoViewModel.ChangeViewRequest += ChangeViewApp;
+                taskInfoViewModel.RemoveTimerRequest += RemoveTimerTask;
                 CurrentView = taskInfoViewModel;
                 Trace.WriteLine(CurrentView.GetType());
             }
@@ -134,25 +157,25 @@ namespace ToDoApp.ViewModel
         }
         private void AddTimerTask(object sender, TaskEventArgs e)
         {
-            Trace.WriteLine("dodaj timer do mainviewmodel");
+            Trace.WriteLine("AddTimerTask Event (MainViewModel)!");
             timerManager.AddTimer(e.Task);
         }
         private void RemoveAllTimerTasks(object sender, EventArgs e)
         {
-            Trace.WriteLine("usuwamy do mainviewmodel");
+            Trace.WriteLine("RemoveAllTimerTasks Event (MainViewModel)!");
 
             timerManager.StopAllTimers();
         }
         private void RemoveTimerTask(object sender, StringEventArgs e)
         {
-            Trace.WriteLine("usun timer do mainviewmodel");
+            Trace.WriteLine("RemoveTimerTask Event (MainViewModel)!");
 
             timerManager.DeleteTimer(e.Text);
         }
         private void ChangeViewAPI(object sender,EventArgs e)
         {
 
-            if (CurrentView.GetType() == typeof(CalendarViewModel)) //change view event from calendar
+            if (CurrentView.GetType() == typeof(CalendarViewModel)) //change view event from calendar to googletaskinfo (view)
             {
                 CalendarViewModel calendarViewModel = CurrentView as CalendarViewModel;
                 var googleInfoViewModel = new GoogleTaskInfoViewModel(calendarViewModel.SelectedTask);
@@ -160,7 +183,7 @@ namespace ToDoApp.ViewModel
                 CurrentView = googleInfoViewModel;
                 //  var calendarTaskInfoViewModel=new 
             }
-            else if (CurrentView.GetType() == typeof(GoogleTaskInfoViewModel)) // change view event from googletaskinfo
+            else if (CurrentView.GetType() == typeof(GoogleTaskInfoViewModel)) // change view event from googletaskinfo to calendar (view)
             {
                 var calendarViewModel = new CalendarViewModel();
                 calendarViewModel.ChangeViewRequest += ChangeViewAPI;

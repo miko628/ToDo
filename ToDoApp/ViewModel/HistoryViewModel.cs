@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,10 +15,26 @@ namespace ToDoApp.ViewModel
     {
         private readonly HistoryModel historyModel;
         public ObservableCollection<ToDoTask> HistoryTasks { get; set; }
-        public ToDoTask SelectedTask { get; set; }
+        private ToDoTask _selectedTask;
+        public ToDoTask? SelectedTask
+        {
+            get { return _selectedTask; }
+            set
+            {
+                //ChangeViewRequest?.Invoke(this, EventArgs.Empty);
+                if (value is not null)
+                {
+                    _selectedTask = value;
+                    OnPropertyChanged(nameof(SelectedTask));
+                    OnViewChangeViewRequested();
+                }
+
+
+            }
+        }
         public RelayCommand Unchecked { get; set; }
         public RelayCommand DeleteTask { get; set; }
-
+        public event EventHandler ChangeViewRequest;
 
         public HistoryViewModel()
         {
@@ -27,6 +44,12 @@ namespace ToDoApp.ViewModel
             Unchecked = new RelayCommand(ExecuteUndoneTask, CanExecuteMyCommand);
             DeleteTask = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
 
+        }
+
+        private void OnViewChangeViewRequested()
+        {
+
+            ChangeViewRequest?.Invoke(this, EventArgs.Empty);
         }
 
         private void ExecuteUndoneTask(object parameter)

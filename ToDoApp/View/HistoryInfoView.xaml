@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="ToDoApp.View.HistoryInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ToDoApp.View"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Nazwa:" Grid.Row="0" Style="{StaticResource DefaultTextBlock}"/>
+        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding NameField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource HideTextBox}"/>
+        <TextBlock Text="Opis:" Grid.Row="1"  Style="{StaticResource DefaultTextBlock}"/>
+        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding DescriptionField}" IsReadOnly="{Binding Disabled}" Style="{StaticResource HideTextBox}"/>
+        <TextBlock Text="Data i godzina:" Grid.Row="2"  Style="{StaticResource DefaultTextBlock}"/>
+        <mah:DateTimePicker Grid.Row="2" Grid.Column="2" IsReadOnly="{Binding Disabled}" Style="{StaticResource HideDateTimePicker}" SelectedDateTime="{Binding DatePick}"  DisplayDateStart="{Binding TodayDate}" FirstDayOfWeek="Monday" Culture="pl-PL" />
+        <TextBlock Text="Wykonano" Grid.Row="3"  Style="{StaticResource DefaultTextBlock}"/>
+        <ComboBox Grid.Row="3" Grid.Column="2" SelectedIndex="{Binding DoneField, Mode=TwoWay}" IsReadOnly="{Binding Disabled}"  Style="{StaticResource HideComboBox}">
+            <ComboBoxItem>Tak</ComboBoxItem>
+            <ComboBoxItem>Nie</ComboBoxItem>
+        </ComboBox>
+        <Grid Grid.Row="4" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+            <Button Content="Cofnij" Command="{Binding BackCommand}" Style="{StaticResource AppButton}" Grid.Row="4" Grid.Column="0"/>
+            <Button Content="Usuń" Command="{Binding DeleteCommand}" Style="{StaticResource AppButton}" Grid.Row="4" Grid.Column="1" />
+            
+
+        </Grid>
+    </Grid>
+</UserControl>

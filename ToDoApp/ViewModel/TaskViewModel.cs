@@ -30,24 +30,20 @@ namespace ToDoApp.ViewModel
 
         private void OnRemoveAllTimersRequest()
         {
-            Trace.WriteLine("usuwamyall");
             RemoveAllTimersRequest?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnRemoveTimerRequest(string id)
         {
-            Trace.WriteLine("usuwamy");
             RemoveTimerRequest?.Invoke(this, new StringEventArgs(id));
         }
 
         private void OnAddTimerTaskRequest(ToDoTask task)
         {
-            Trace.WriteLine("dodajemy");
             AddTimerTaskRequest?.Invoke(this, new TaskEventArgs(task));
         }
         private void OnViewChangeViewRequested()
         {
-            Trace.WriteLine("zmieniamy");
 
             ChangeViewRequest?.Invoke(this, EventArgs.Empty);
         }
@@ -94,7 +90,6 @@ namespace ToDoApp.ViewModel
         }
         public void Initialize()
         {
-            // Wywołanie metody, która może spowodować zdarzenie
             ReloadEvents();
         }
         private void ReloadEvents()
@@ -128,7 +123,7 @@ namespace ToDoApp.ViewModel
             //Trace.WriteLine((ToDoTask)parameter);
             var task = parameter as ToDoTask;
             taskModel.DoneTask(task);
-            OnAddTimerTaskRequest(task);
+            OnRemoveTimerRequest(task.Id);
 // add try catch (validation)
             LoadTasks();
         }
@@ -147,6 +142,13 @@ namespace ToDoApp.ViewModel
             {
                 taskCreator = new TaskCreatorView();              
                 taskCreator.Closed += TaskCreator_Closed;
+                var DataContext = new TaskCreatorViewModel();
+                
+                DataContext.AddTimerTaskRequest += OnAddTimerTaskRequest;
+                DataContext.OnRequestClose += (s, e) => taskCreator.Close();
+
+                taskCreator.DataContext= DataContext;
+
                 taskCreator.ShowDialog();
 
             }
@@ -156,13 +158,21 @@ namespace ToDoApp.ViewModel
 
         }
 
+        private void OnAddTimerTaskRequest(object sender, TaskEventArgs task)
+        {
+            AddTimerTaskRequest?.Invoke(this, task);
 
+        }
 
         private void TaskCreator_Closed(object sender, EventArgs e)
         {
             // Usuń referencję do zamkniętego okna
             taskCreator = null;
             LoadTasks();
+
+            //ReloadEvents();
+
+
         }
         private void ExecuteDeleteTask(object parameter)
         {
@@ -171,6 +181,7 @@ namespace ToDoApp.ViewModel
             {
                 OnRemoveTimerRequest(task.Id);
                 LoadTasks();
+
             }
             else MessageBox.Show("Nie udalo sie usunac zadania!");
         }

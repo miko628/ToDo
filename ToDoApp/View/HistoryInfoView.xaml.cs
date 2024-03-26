@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ToDoApp.ViewModel;
 
 namespace ToDoApp.View
 {
     /// <summary>
-    /// Interaction logic for TaskCreatorView.xaml
+    /// Interaction logic for HistoryInfoView.xaml
     /// </summary>
-    public partial class TaskCreatorView : MetroWindow
+    public partial class HistoryInfoView : UserControl
     {
-        public event EventHandler OnRequestClose;
-        public TaskCreatorView()
+        public HistoryInfoView()
         {
             InitializeComponent();
-
         }
-
-        
     }
 }

@@ -31,6 +31,13 @@ namespace ToDoApp.ViewModel
         public RelayCommand CancelCommand { get; set; }
         public RelayCommand SaveCommand { get; set; }
 
+        public event EventHandler<StringEventArgs> RemoveTimerRequest;
+
+        private void OnRemoveTimerRequest(string id)
+        {
+            RemoveTimerRequest?.Invoke(this, new StringEventArgs(id));
+        }
+
         private void OnViewChangeViewRequested()
         {
             ChangeViewRequest?.Invoke(this, EventArgs.Empty);
@@ -113,6 +120,8 @@ namespace ToDoApp.ViewModel
             {
                 if (taskInfoModel.DeleteTask(_task))
                 {
+                    OnRemoveTimerRequest(_task.Id);
+                    _task = null;
                     OnViewChangeViewRequested();
                 }
                 else MessageBox.Show("Wystapil blad przy usuwaniu zadania!");
