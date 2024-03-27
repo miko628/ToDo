@@ -64,7 +64,6 @@ namespace ToDoApp.ViewModel
             _task = task;
             DefaultValues(task);
             //DateField = task.TaskToDoDate.ToString();
-            
             BackCommand = new RelayCommand((e) => { OnViewChangeViewRequested(); },CanExecuteMyCommand);
             DeleteCommand = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
             EditCommand = new RelayCommand(ExecuteEditTask, CanExecuteMyCommand);
@@ -99,6 +98,7 @@ namespace ToDoApp.ViewModel
             {
                 if (DatePick >= now)
                 {
+                    Trace.WriteLine(DoneField);
                     taskInfoModel.UpdateTask(_task, NameField, DescriptionField, DatePick, DoneField);
 
                 }

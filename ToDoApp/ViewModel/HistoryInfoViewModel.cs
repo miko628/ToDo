@@ -20,6 +20,7 @@ namespace ToDoApp.ViewModel
         public bool Disabled { get; set; }
         private ToDoTask _task;
         public DateTime DatePick { get; set; }
+        public DateTime TodayDate { get; set; }
 
         public RelayCommand BackCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
@@ -37,6 +38,7 @@ namespace ToDoApp.ViewModel
             DescriptionField = task.Description;
             DatePick = task.TaskToDoDate;
             DoneField = task.Done;
+            TodayDate = DateTime.Now;
             Disabled = true;
             BackCommand = new RelayCommand((e) => { OnViewChangeViewRequested(); }, CanExecuteMyCommand);
             DeleteCommand = new RelayCommand(ExecuteDeleteTask, CanExecuteMyCommand);
